@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
     "emitDecoratorMetadata": false,
     "experimentalDecorators": false,
     "module": "none",
@@ -9,7 +9,7 @@
     "noImplicitAny": false,
     "noImplicitReturns": false,
     "removeComments": false,
-    "sourceMap": false,
+    "sourceMap": true,
     "strictNullChecks": false,
     "target": "es6",
     "plugins": [

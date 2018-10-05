@@ -5,12 +5,12 @@
   "extends": ["tslint:all", "tslint-config-prettier"],
   "rules": {
     // Don't want these
-    "cyclomatic-complexity": false,
-    "increment-decrement": false,
-    "newline-before-return": false,
-    "no-parameter-properties": false,
-    "no-parameter-reassignment": false,
-    "no-unused-variable": false,
+    //"cyclomatic-complexity": false,
+    //"increment-decrement": false,
+    //"newline-before-return": false,
+    //"no-parameter-properties": false,
+    //"no-parameter-reassignment": false,
+    //"no-unused-variable": false,
     // TODO: Enable stricter options for these
     "comment-format": [
         true,
