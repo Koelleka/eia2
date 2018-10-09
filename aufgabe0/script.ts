@@ -9,12 +9,10 @@ Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde n
 
 namespace a0 {
 
-    var name: string = "";
     function eingabe() {
         var name = prompt( "Bitte gib deinen Namen ein" );
-        var node: any = document.getElementById( "inhalt" );
         var nachricht = "Hallo " + name + "! Herzlich willkommen :)";
-        node.innerHTML = nachricht;
+        document.getElementById( "inhalt" ).innerHTML = nachricht;
         console.log( nachricht );
     }
 

@@ -8,12 +8,10 @@ Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde n
 **/
 var a0;
 (function (a0) {
-    var name = "";
     function eingabe() {
         var name = prompt("Bitte gib deinen Namen ein");
-        var node = document.getElementById("inhalt");
         var nachricht = "Hallo " + name + "! Herzlich willkommen :)";
-        node.innerHTML = nachricht;
+        document.getElementById("inhalt").innerHTML = nachricht;
         console.log(nachricht);
     }
     document.addEventListener('DOMContentLoaded', eingabe);
