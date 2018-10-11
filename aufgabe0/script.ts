@@ -9,12 +9,12 @@ Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde n
 
 namespace a0 {
 
-    function eingabe() {
-        var name = prompt( "Bitte gib deinen Namen ein" );
-        var nachricht = "Hallo " + name + "! Herzlich willkommen :)";
+    function eingabe(): void {
+        var name: string = prompt( "Bitte gib deinen Namen ein" );
+        var nachricht: string = "Hallo " + name + "! Herzlich willkommen :)";
         document.getElementById( "inhalt" ).innerHTML = nachricht;
         console.log( nachricht );
     }
 
-    document.addEventListener( 'DOMContentLoaded', eingabe );
+    document.addEventListener( "DOMContentLoade", eingabe );
 }

@@ -14,6 +14,6 @@ var a0;
         document.getElementById("inhalt").innerHTML = nachricht;
         console.log(nachricht);
     }
-    document.addEventListener('DOMContentLoaded', eingabe);
+    document.addEventListener("DOMContentLoade", eingabe);
 })(a0 || (a0 = {}));
 //# sourceMappingURL=script.js.map
