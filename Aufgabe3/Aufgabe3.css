@@ -1,0 +1,94 @@
+html {
+	font-family: Arial;
+}
+
+.card { 
+	position: absolute;
+	width: 100px;
+	height: 160px;
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 10px; /*abgerundet*/
+	padding: 5px; /*Abstand nach innen von allen Seiten*/
+	background-color: white;
+	font-weight: bold;
+	text-shadow: 1px 1px black;
+	cursor: pointer;
+}
+
+.card > .bg { /*Hintergrund*/
+	border-radius: 10px; 
+	height: 100%;
+	width: 100%;
+}
+
+.card > .circle { /*Ellipse*/
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	-webkit-clip-path: ellipse(35% 45% at 50% 50%); /*Arbeitspfad in Form einer Ellipse, alle Browser*/
+	clip-path: ellipse(35% 45% at 50% 50%);
+	background-color: white;
+	transform: rotate(30deg); /*Drehung der Ellipse um 30*/
+}
+
+.card > .red {
+	background-color: red;
+	
+}
+
+.card > .blue {
+	background-color: blue;
+}
+
+.card > .green {
+	background-color: green;
+}
+
+.card > .yellow {
+	background-color: yellow;
+}
+
+.card > .top-left { /*Zahl oben links*/
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	color: white;
+}
+
+.card > .bottom-right {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	color: white;
+}
+
+.card > .center {
+	position: absolute;
+	float: left; /*linksbündig*/
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%); /*top,left,transform;100%ige-zentrierung*/
+	font-size: 50px;
+	font-weight: bold; /*fett*/
+	font-style: italic; /*kursiv*/
+}
+
+.card > .red + .circle + .top-left + .center { /*Farbe der Zahl in der Mitte*/
+	color: red;
+}
+
+.card > .green + .circle + .top-left + .center { /*""*/
+	color: green;
+}
+
+.card > .blue + .circle + .top-left + .center {
+	color: blue;
+}
+
+.card > .yellow + .circle + .top-left + .center {
+	color: yellow;
+}
