@@ -21,7 +21,6 @@ namespace Baum2 {
             groupNameH2.innerText = group.name;
             groupDiv.appendChild( groupNameH2 );
 
-
             if ( group.type == dropdown ) {
                 var articleSelect: HTMLSelectElement = <HTMLSelectElement>document.createElement( "select" );
                 articleSelect.className = "articleInput";
