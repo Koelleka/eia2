@@ -3,7 +3,7 @@
     "declaration": true,
     "emitDecoratorMetadata": false,
     "experimentalDecorators": false,
-    "module": "none",
+    "module": "es6",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": false,
