@@ -1,4 +1,7 @@
-import * as Http from "http"; // Importiert alle Funktionen vom modul "http", das http Modul ist in der node.d.ts definiert
+import * as Http from "http";
+//import Http = require( 'http' );
+/*Importiert alle Funktionen vom modul "httpdas
+ * http Modul ist in der node.d.ts definiert */
 
 namespace Server {
     console.log( "Starting server" ); // Konsolenausgabe

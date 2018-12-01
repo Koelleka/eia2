@@ -1,4 +1,4 @@
-declare namespace Uno {
+declare namespace Uno2 {
     class Card {
         color: string;
         type: string;

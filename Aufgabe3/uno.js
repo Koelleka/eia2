@@ -1,5 +1,5 @@
-var Uno;
-(function (Uno) {
+var Uno2;
+(function (Uno2) {
     document.addEventListener("DOMContentLoaded", start);
     // Mit den Infos bauen wir später alle Karten die es gibt
     //alle Farben die es gibt 
@@ -40,7 +40,7 @@ var Uno;
             }
         }
     }
-    Uno.Card = Card;
+    Uno2.Card = Card;
     class Player {
         constructor(_name) {
             this.name = _name;
@@ -55,7 +55,7 @@ var Uno;
             return null;
         }
     }
-    Uno.Player = Player;
+    Uno2.Player = Player;
     // Spiel initialisieren
     function start() {
         //promt=Eingabefenster
@@ -265,5 +265,5 @@ var Uno;
         cardDiv.removeEventListener("click", mouseClickOnMyCard);
     }
     //
-})(Uno || (Uno = {}));
+})(Uno2 || (Uno2 = {}));
 //# sourceMappingURL=uno.js.map

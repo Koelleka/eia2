@@ -19,4 +19,4 @@ tsserverEmulatePlugins=false
 tsserverTraceOnConsole=false
 typeScriptBuildPath={"tsconfig.json"\:{}}
 useEmbeddedTypeScript=true
-useNodeJSEmbedded=true
+useNodeJSEmbedded=false

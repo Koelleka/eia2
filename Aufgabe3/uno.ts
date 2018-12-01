@@ -1,4 +1,4 @@
-namespace Uno {
+namespace Uno2 {
     document.addEventListener( "DOMContentLoaded", start );
 
     // Mit den Infos bauen wir später alle Karten die es gibt

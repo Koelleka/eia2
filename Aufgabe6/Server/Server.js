@@ -1,4 +1,9 @@
-import * as Http from "http"; // Importiert alle Funktionen vom modul "http", das http Modul ist in der node.d.ts definiert
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Http = require("http");
+//import Http = require( 'http' );
+/*Importiert alle Funktionen vom modul "httpdas
+ * http Modul ist in der node.d.ts definiert */
 var Server;
 (function (Server) {
     console.log("Starting server"); // Konsolenausgabe
