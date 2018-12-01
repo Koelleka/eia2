@@ -21,6 +21,7 @@ namespace Server {
 
     function handleListen(): void {
         console.log( "Listening" ); // Konsolenausgabe
+
     }
 
     /* Die "handleRequest" Methode handelt eine Anfrage, welche beim Server rein kommt.
