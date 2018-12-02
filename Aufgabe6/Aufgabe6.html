@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<!-- Umlaute zulassen! -->
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="Aufgabe6.css" ></link>
+ </head>
+ <body>
+  
+  	<!-- Formular um alle Eingaben bauen -->
+  	<form id="orderForm" action="https://eia2servertest.herokuapp.com" method="get">
+		<!-- Artikelauswahl -->
+		<div id="articleSelection">
+			<div id="articles">
+				<!-- Hier setzen wir die Artikelgruppen ein -->
+			</div>
+			
+			<!--  Bestellformular -->
+			<div id="contactForm">
+				<h2>Lieferadresse</h2>
+				<input class="required" name="firstName" placeholder="Vorname" value="Katharina"></input>
+				<input class="required" name="lastName" placeholder="Nachname" value="Kölle"></input><br/>
+				<input class="required" name="street" placeholder="Straße" value="Straße"></input>
+				<input class="required" name="num" placeholder="Hausnummer" value="132"></input>
+				<input class="required" name="zipCode" placeholder="Postleitzahl" value="12345"></input>
+				<input class="required" name="city" placeholder="Ort" value="Furtwangen"></input><br/>
+				<input class="required" name="country" placeholder="Land" value="Deutschland"></input>
+				<select id="deliveryType" name="deliveryType">
+				</select><br/>
+				<input class="required" name="phone" placeholder="Telefonnummer für Rückfragen" value="0176 1233456"></input>
+			</div>
+		</div>
+		
+		<!-- Bestellzusammenfassung -->
+		<div id="orderSummary">
+			<h3>Bestellzusammenfassung</h3>
+			<ul id="orderSummaryList">
+				<!-- Hier kommen die einzelnen Posten rein -->
+			</ul>
+			<div id="liveSum">
+				<!-- Hier kommt die aktuelle Summe der Bestellung rein -->
+			</div>
+			<button id="checkButton" type="button">
+				Prüfen
+			</button>
+			<button id="submitButton" type="button">
+				Bestellung übermitteln
+			</button>
+		</div>
+	</form>
+
+	<script src="Configuration.js"></script>
+	<script src="Configurator.js"></script>
+ 
+</body>
+</html>

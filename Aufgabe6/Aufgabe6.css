@@ -1,0 +1,56 @@
+html {
+	width: 100%;
+	height: 100%;	
+}
+
+#articleSelection {
+	width: 70%;
+	height: 100%;
+	float: left;
+}
+
+#orderSummary {
+	width: 30%;
+	height: 100%;
+	float: left;
+}
+
+#orderSummaryList {
+	width: 100%;
+}
+
+#liveSum {
+	font-weight: bold;
+	text-align: center;
+	width: 100%;
+}
+
+.group {
+	width: 100%;
+	height: 100%;
+	float: left;
+	padding: 5px;
+}
+
+.article {
+	width: 100%;
+	padding: 5px;
+}
+
+.articleName {
+	width: 200px;
+	height: 20px;
+	float: left;
+}
+
+.articlePrice {
+	width: 100px;
+	height: 20px;
+	float: left;
+	font-weight: bold;
+}
+
+.articleInput {
+	width: 100px;
+	height: 20px;
+}
