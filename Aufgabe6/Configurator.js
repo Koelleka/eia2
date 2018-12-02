@@ -137,7 +137,7 @@ var Baum3;
     }
     /* Aufgabe 6.4 */
     function sendRequestWithCustomData(_form) {
-        var queryString = "";
+        var queryString = "?";
         for (var i = 0; i < _form.elements.length; i++) {
             var element = _form.elements[i];
             if (element instanceof HTMLInputElement) {
@@ -148,7 +148,7 @@ var Baum3;
                 var selectElement = element;
                 queryString += selectElement.name + "=" + selectElement.value;
             }
-            queryString += " ";
+            queryString += "&";
         }
         let xhr = new XMLHttpRequest();
         xhr.open("GET", _form.action + queryString, true);

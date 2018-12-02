@@ -164,7 +164,7 @@ namespace Baum3 {
     /* Aufgabe 6.4 */
     function sendRequestWithCustomData( _form: HTMLFormElement ): void {
 
-        var queryString: string = "";
+        var queryString: string = "?";
         for ( var i: number = 0; i < _form.elements.length; i++ ) {
             var element: Element = _form.elements[i];
             if ( element instanceof HTMLInputElement ) {
@@ -174,7 +174,7 @@ namespace Baum3 {
                 var selectElement: HTMLSelectElement = <HTMLSelectElement>element;
                 queryString += selectElement.name + "=" + selectElement.value;
             }
-            queryString += " ";
+            queryString += "&";
         }
 
         let xhr: XMLHttpRequest = new XMLHttpRequest();
