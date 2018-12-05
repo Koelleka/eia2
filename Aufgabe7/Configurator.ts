@@ -177,6 +177,11 @@ namespace Baum4 {
             queryString += "&";
         }
 
+        // & Symbole am Ende entfernen
+        while ( queryString.charAt( queryString.length - 1 ) == "&" ) {
+            queryString = queryString.slice( 0, -1 )
+        }
+
         let xhr: XMLHttpRequest = new XMLHttpRequest();
         xhr.open( "GET", _form.action + queryString, true );
         xhr.addEventListener( "readystatechange", handleStateChange );
