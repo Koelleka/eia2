@@ -39,11 +39,15 @@ namespace Server {
          * Wird oft für das CORS Protokoll verwendet */
         _response.setHeader( "Access-Control-Allow-Origin", "*" );
 
+        /* Leerzeuchen werden mit %20 ersetzt beim Senden der Anfrage. 
+         * Das müssen wir rückgängig machen */
         var decodedUrl: string = decodeURI( _request.url );
+        /* Erst splitten wir das ? vor dem Query String, dann die Parameter mit = */
         var requestUrlParts: string[] = decodedUrl.split( "?" );
         if ( requestUrlParts.length == 2 ) {
             var queryString: string = requestUrlParts[1];
             var parameterPairs: string[] = queryString.split( "&" );
+            /* Als assoziatives Array können wir die Map verwenden oder any */
             var requestObj: Map<string, string> = new Map<string, string>();
             for ( var i: number = 0; i < parameterPairs.length; i++ ) {
                 var parameterPair: string[] = parameterPairs[i].split( "=" );
@@ -54,7 +58,9 @@ namespace Server {
 
             var responseText: string = "Bestellzusammenfassung:\n";
 
+            /* Map hat eine Iterationsfunktion eingebaut */
             requestObj.forEach(( value, key ) => {
+                /* Für jedes Element in der Map wird das ausgeführt */
                 responseText += key + ": " + value + "\n";
             } );
 

@@ -35,11 +35,15 @@ var Server;
          * Diesen Header verwendet man, um den Zugriff von allen Quellen zu erlauben.
          * Wird oft für das CORS Protokoll verwendet */
         _response.setHeader("Access-Control-Allow-Origin", "*");
+        /* Leerzeuchen werden mit %20 ersetzt beim Senden der Anfrage.
+         * Das müssen wir rückgängig machen */
         var decodedUrl = decodeURI(_request.url);
+        /* Erst splitten wir das ? vor dem Query String, dann die Parameter mit = */
         var requestUrlParts = decodedUrl.split("?");
         if (requestUrlParts.length == 2) {
             var queryString = requestUrlParts[1];
             var parameterPairs = queryString.split("&");
+            /* Als assoziatives Array können wir die Map verwenden oder any */
             var requestObj = new Map();
             for (var i = 0; i < parameterPairs.length; i++) {
                 var parameterPair = parameterPairs[i].split("=");
@@ -48,7 +52,9 @@ var Server;
                 requestObj.set(parameterName, parameterValue);
             }
             var responseText = "Bestellzusammenfassung:\n";
+            /* Map hat eine Iterationsfunktion eingebaut */
             requestObj.forEach((value, key) => {
+                /* Für jedes Element in der Map wird das ausgeführt */
                 responseText += key + ": " + value + "\n";
             });
             _response.write(responseText);
