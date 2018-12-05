@@ -39,8 +39,28 @@ namespace Server {
          * Wird oft für das CORS Protokoll verwendet */
         _response.setHeader( "Access-Control-Allow-Origin", "*" );
 
-        /* Alt Antwort wird die Url, von der die Anfrage kommt, in den Response Body geschrieben. */
-        _response.write( _request.url );
+        var requestUrlParts: string[] = _request.url.split( "?" );
+        if ( requestUrlParts.length == 2 ) {
+            var queryString: string = requestUrlParts[1];
+            var parameterPairs: string[] = queryString.split( "&" );
+            var requestObj: any = {}; // tslint Datei angepasst um any zuzulassen. Auch wenn wir any nicht verwenden sollen.
+            for ( var i: number = 0; i < parameterPairs.length; i++ ) {
+                var parameterPair: string[] = parameterPairs[i].split( "=" );
+                var parameterName: string = parameterPair[0];
+                var parameterValue: string = parameterPair[1];
+                requestObj[parameterName] = parameterValue;
+            }
+
+            var responseText: string = "Bestellzusammenfassung:\n";
+
+            for ( i = 0; i < parameterPairs.length; i++ ) {
+                responseText += parameterPairs[0] + ": " + parameterPairs[1] + "\n";
+            }
+
+            _response.write( responseText );
+        } else {
+            _response.write( "Ungültige Antrage" );
+        }
 
         /* Ende der Anfrage / Response Stream wird geschlossen */
         _response.end();

@@ -35,8 +35,26 @@ var Server;
          * Diesen Header verwendet man, um den Zugriff von allen Quellen zu erlauben.
          * Wird oft für das CORS Protokoll verwendet */
         _response.setHeader("Access-Control-Allow-Origin", "*");
-        /* Alt Antwort wird die Url, von der die Anfrage kommt, in den Response Body geschrieben. */
-        _response.write(_request.url);
+        var requestUrlParts = _request.url.split("?");
+        if (requestUrlParts.length == 2) {
+            var queryString = requestUrlParts[1];
+            var parameterPairs = queryString.split("&");
+            var requestObj = {}; // tslint Datei angepasst um any zuzulassen. Auch wenn wir any nicht verwenden sollen.
+            for (var i = 0; i < parameterPairs.length; i++) {
+                var parameterPair = parameterPairs[i].split("=");
+                var parameterName = parameterPair[0];
+                var parameterValue = parameterPair[1];
+                requestObj[parameterName] = parameterValue;
+            }
+            var responseText = "Bestellzusammenfassung:\n";
+            for (i = 0; i < parameterPairs.length; i++) {
+                responseText += parameterPairs[0] + ": " + parameterPairs[1] + "\n";
+            }
+            _response.write(responseText);
+        }
+        else {
+            _response.write("Ungültige Antrage");
+        }
         /* Ende der Anfrage / Response Stream wird geschlossen */
         _response.end();
     }
