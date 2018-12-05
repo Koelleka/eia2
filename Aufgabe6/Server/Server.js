@@ -44,7 +44,7 @@ var Server;
                 var parameterPair = parameterPairs[i].split("=");
                 var parameterName = parameterPair[0];
                 var parameterValue = parameterPair[1];
-                requestObj[parameterName] = parameterValue;
+                requestObj.set(parameterName, parameterValue);
             }
             var responseText = "Bestellzusammenfassung:\n";
             requestObj.forEach((value, key) => {

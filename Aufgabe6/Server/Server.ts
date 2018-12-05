@@ -48,7 +48,7 @@ namespace Server {
                 var parameterPair: string[] = parameterPairs[i].split( "=" );
                 var parameterName: string = parameterPair[0];
                 var parameterValue: string = parameterPair[1];
-                requestObj[parameterName] = parameterValue;
+                requestObj.set( parameterName, parameterValue );
             }
 
             var responseText: string = "Bestellzusammenfassung:\n";
