@@ -35,7 +35,8 @@ var Server;
          * Diesen Header verwendet man, um den Zugriff von allen Quellen zu erlauben.
          * Wird oft für das CORS Protokoll verwendet */
         _response.setHeader("Access-Control-Allow-Origin", "*");
-        var requestUrlParts = _request.url.split("?");
+        var decodedUrl = decodeURI(_request.url);
+        var requestUrlParts = decodedUrl.split("?");
         if (requestUrlParts.length == 2) {
             var queryString = requestUrlParts[1];
             var parameterPairs = queryString.split("&");

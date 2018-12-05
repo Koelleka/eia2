@@ -39,7 +39,8 @@ namespace Server {
          * Wird oft für das CORS Protokoll verwendet */
         _response.setHeader( "Access-Control-Allow-Origin", "*" );
 
-        var requestUrlParts: string[] = _request.url.split( "?" );
+        var decodedUrl: string = decodeURI( _request.url );
+        var requestUrlParts: string[] = decodedUrl.split( "?" );
         if ( requestUrlParts.length == 2 ) {
             var queryString: string = requestUrlParts[1];
             var parameterPairs: string[] = queryString.split( "&" );
