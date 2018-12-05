@@ -50,7 +50,7 @@ var Server;
             requestObj.forEach((value, key) => {
                 responseText += key + ": " + value + "\n";
             });
-            _response.write(JSON.stringify(requestObj));
+            _response.write(responseText);
         }
         else {
             _response.write("Ungültige Antrage");
