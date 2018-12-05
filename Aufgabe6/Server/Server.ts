@@ -43,7 +43,7 @@ namespace Server {
         if ( requestUrlParts.length == 2 ) {
             var queryString: string = requestUrlParts[1];
             var parameterPairs: string[] = queryString.split( "&" );
-            var requestObj: any = {}; // tslint Datei angepasst um any zuzulassen. Auch wenn wir any nicht verwenden sollen.
+            var requestObj: Map<string, string> = new Map<string, string>();
             for ( var i: number = 0; i < parameterPairs.length; i++ ) {
                 var parameterPair: string[] = parameterPairs[i].split( "=" );
                 var parameterName: string = parameterPair[0];
@@ -53,9 +53,9 @@ namespace Server {
 
             var responseText: string = "Bestellzusammenfassung:\n";
 
-            for ( i = 0; i < parameterPairs.length; i++ ) {
-                responseText += parameterPairs[0] + ": " + parameterPairs[1] + "\n";
-            }
+            requestObj.forEach(( value, key ) => {
+                responseText += key + ": " + value + "\n";
+            } );
 
             _response.write( responseText );
         } else {

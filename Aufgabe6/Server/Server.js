@@ -39,7 +39,7 @@ var Server;
         if (requestUrlParts.length == 2) {
             var queryString = requestUrlParts[1];
             var parameterPairs = queryString.split("&");
-            var requestObj = {}; // tslint Datei angepasst um any zuzulassen. Auch wenn wir any nicht verwenden sollen.
+            var requestObj = new Map();
             for (var i = 0; i < parameterPairs.length; i++) {
                 var parameterPair = parameterPairs[i].split("=");
                 var parameterName = parameterPair[0];
@@ -47,9 +47,9 @@ var Server;
                 requestObj[parameterName] = parameterValue;
             }
             var responseText = "Bestellzusammenfassung:\n";
-            for (i = 0; i < parameterPairs.length; i++) {
-                responseText += parameterPairs[0] + ": " + parameterPairs[1] + "\n";
-            }
+            requestObj.forEach((value, key) => {
+                responseText += key + ": " + value + "\n";
+            });
             _response.write(responseText);
         }
         else {
