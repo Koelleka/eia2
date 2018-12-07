@@ -51,13 +51,20 @@ var Server;
                 var parameterValue = parameterPair[1];
                 requestObj.set(parameterName, parameterValue);
             }
-            var responseText = "Bestellzusammenfassung:\n";
             /* Map hat eine Iterationsfunktion eingebaut */
-            requestObj.forEach((value, key) => {
-                /* Für jedes Element in der Map wird das ausgeführt */
-                responseText += key + ": " + value + "\n";
-            });
-            _response.write(responseText);
+            /* Code von Aufgabe 7.1 */
+            // var responseText: string = "Bestellzusammenfassung:\n";
+            // requestObj.forEach(( value, key ) => {
+            //    // Für jedes Element in der Map wird das ausgeführt 
+            //    responseText += key + ": " + value + "\n";
+            //} );
+            /* Code von Aufgabe 7.2 */
+            // http://2ality.com/2015/08/es6-map-json.html
+            // https://basarat.gitbooks.io/typescript/docs/spread-operator.html
+            // Die 3 Punkte sind der prefixing Operator, die Map wird quasi auseinander 
+            // gebaut und die einzelnen Key Value Paare als Parameter übergeben
+            var responseJson = JSON.stringify([...requestObj]);
+            _response.write(responseJson);
         }
         else {
             _response.write("Ungültige Antrage");
