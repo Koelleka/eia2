@@ -163,7 +163,30 @@ var Baum4;
     function handleStateChange(_event) {
         var xhr = _event.target;
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            alert("response from server: " + xhr.response);
+            /* Aufgabe 7.1 */
+            //alert( "response from server: " + xhr.response );
+            /* Aufgabe 7.2 / Bonusaufgabe */
+            // Auf dem Server haben wir aus dem Objekt ein JSON gemacht
+            // Auf dem Client wollen wir aus dem JSON wieder ein Objekt machen
+            // JSON.parse erstellt ein JS Objekt aus einem Json String
+            var responseString = xhr.response;
+            console.log(responseString);
+            // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
+            var responseObj = new Map(JSON.parse(responseString));
+            console.log(responseObj);
+            // Das Ergebnis stellen wir unter der Bestellung dar
+            var container = document.getElementById("responseContainer");
+            container.innerHTML = "";
+            // Für die JS Map gibt es die forEach Methode zum jedes Element zu durchlaufen
+            // Das ist wie eine for Schleife, nur das wir eine anonyme funktion als parameter übergeben
+            // Die Funktion wird für jedes Paar in der Map aufsgeführt
+            // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Map
+            responseObj.forEach((value, key) => {
+                console.log(key, value);
+                var divElement = document.createElement("div");
+                divElement.innerText = key + ": " + value;
+                container.appendChild(divElement);
+            });
         }
     }
 })(Baum4 || (Baum4 = {}));
