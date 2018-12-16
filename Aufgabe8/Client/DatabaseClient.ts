@@ -10,7 +10,7 @@ namespace DatabaseClient {
         let findButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById( "find" );
         insertButton.addEventListener( "click", insert );
         refreshButton.addEventListener( "click", refresh );
-        findButton.addEventListener( "find", find );
+        findButton.addEventListener( "click", find );
     }
 
     function insert( _event: Event ): void {

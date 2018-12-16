@@ -10,7 +10,7 @@ var DatabaseClient;
         let findButton = document.getElementById("find");
         insertButton.addEventListener("click", insert);
         refreshButton.addEventListener("click", refresh);
-        findButton.addEventListener("find", find);
+        findButton.addEventListener("click", find);
     }
     function insert(_event) {
         console.log("insert");
