@@ -58,3 +58,13 @@ export function findAll( _callback: Function ): void {
             _callback( JSON.stringify( studentArray ) );
     }
 }
+
+export function find( _matrikel: number, _callback: Function ): void {
+    students.findOne( { "matrikel": _matrikel }, ( _err: Mongo.MongoError, _result: StudentData ) => {
+        if ( _err ) {
+            _callback( "Error" + _err );
+        } else {
+            _callback( JSON.stringify( _result ) );
+        }
+    } );
+}

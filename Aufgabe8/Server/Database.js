@@ -54,4 +54,15 @@ function findAll(_callback) {
     }
 }
 exports.findAll = findAll;
+function find(_matrikel, _callback) {
+    students.findOne({ "matrikel": _matrikel }, (_err, _result) => {
+        if (_err) {
+            _callback("Error" + _err);
+        }
+        else {
+            _callback(JSON.stringify(_result));
+        }
+    });
+}
+exports.find = find;
 //# sourceMappingURL=Database.js.map

@@ -34,6 +34,10 @@ function handleRequest(_request, _response) {
             break;
         case "refresh":
             Database.findAll(findCallback);
+        // Hier das neue find command
+        case "find":
+            var studentId = parseInt(query["matrikel"]);
+            Database.find(studentId, findCallback);
             break;
         default:
             respond(_response, "unknown command: " + command);

@@ -7,8 +7,10 @@ namespace DatabaseClient {
         console.log( "Init" );
         let insertButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById( "insert" );
         let refreshButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById( "refresh" );
+        let findButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById( "find" );
         insertButton.addEventListener( "click", insert );
         refreshButton.addEventListener( "click", refresh );
+        findButton.addEventListener( "find", refresh );
     }
 
     function insert( _event: Event ): void {
@@ -23,6 +25,13 @@ namespace DatabaseClient {
 
     function refresh( _event: Event ): void {
         let query: string = "command=refresh";
+        sendRequest( query, handleFindResponse );
+    }
+
+    function find( _event: Event ): void {
+        console.log( "find" );
+        var matrikel: string = ( <HTMLInputElement>document.getElementById( "matrikelSearch" ) ).value;
+        let query: string = "command=find&matrikel=" + matrikel;
         sendRequest( query, handleFindResponse );
     }
 
