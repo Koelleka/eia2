@@ -8,7 +8,7 @@
 		"start" : "node Aufgabe8/Server/Server.js"
 	},
 	"engines" : {
-		"node" : "10.14.1"
+		"node" : "8.10.0"
 	},
 	"dependencies" : {
 		"mongodb": "^3.1.10"
