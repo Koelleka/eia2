@@ -10,10 +10,11 @@ namespace DatabaseClient {
         let findButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById( "find" );
         insertButton.addEventListener( "click", insert );
         refreshButton.addEventListener( "click", refresh );
-        findButton.addEventListener( "find", refresh );
+        findButton.addEventListener( "find", find );
     }
 
     function insert( _event: Event ): void {
+        console.log( "insert" );
         let inputs: NodeListOf<HTMLInputElement> = document.getElementsByTagName( "input" );
         let query: string = "command=insert";
         query += "&name=" + inputs[0].value;
@@ -24,6 +25,7 @@ namespace DatabaseClient {
     }
 
     function refresh( _event: Event ): void {
+        console.log( "refresh" );
         let query: string = "command=refresh";
         sendRequest( query, handleFindResponse );
     }

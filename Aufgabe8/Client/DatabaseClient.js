@@ -10,9 +10,10 @@ var DatabaseClient;
         let findButton = document.getElementById("find");
         insertButton.addEventListener("click", insert);
         refreshButton.addEventListener("click", refresh);
-        findButton.addEventListener("find", refresh);
+        findButton.addEventListener("find", find);
     }
     function insert(_event) {
+        console.log("insert");
         let inputs = document.getElementsByTagName("input");
         let query = "command=insert";
         query += "&name=" + inputs[0].value;
@@ -22,6 +23,7 @@ var DatabaseClient;
         sendRequest(query, handleInsertResponse);
     }
     function refresh(_event) {
+        console.log("refresh");
         let query = "command=refresh";
         sendRequest(query, handleFindResponse);
     }
