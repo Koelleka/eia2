@@ -34,6 +34,7 @@ function handleRequest(_request, _response) {
             break;
         case "refresh":
             Database.findAll(findCallback);
+            break;
         // Hier das neue find command
         case "find":
             var matrikel = query["matrikel"];

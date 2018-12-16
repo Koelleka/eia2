@@ -42,6 +42,7 @@ function handleRequest( _request: Http.IncomingMessage, _response: Http.ServerRe
             break;
         case "refresh":
             Database.findAll( findCallback );
+            break;
         // Hier das neue find command
         case "find":
             var matrikel: string = query["matrikel"];
