@@ -1,11 +1,11 @@
 {
 	"name" : "Server",
 	"version" : "1.0.0",
-	"description" : "Node Test",
+	"description" : "Database Test",
 	"author" : "Katharina Koelle",
-	"main" : "Aufgabe6/Server/Server.js",
+	"main" : "Aufgabe8/Server/Server.js",
 	"scripts" : {
-		"start" : "node Aufgabe6/Server/Server.js"
+		"start" : "node Aufgabe8/Server/Server.js"
 	},
 	"engines" : {
 		"node" : "10.14.1"
