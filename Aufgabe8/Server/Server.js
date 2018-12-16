@@ -36,7 +36,12 @@ function handleRequest(_request, _response) {
             Database.findAll(findCallback);
         // Hier das neue find command
         case "find":
-            var studentId = parseInt(query["matrikel"]);
+            var matrikel = query["matrikel"];
+            if (matrikel == null) {
+                respond(_response, "Invalid matrikel sent");
+                return;
+            }
+            var studentId = parseInt(matrikel);
             Database.find(studentId, findCallback);
             break;
         case "test":

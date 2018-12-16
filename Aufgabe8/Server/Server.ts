@@ -44,7 +44,12 @@ function handleRequest( _request: Http.IncomingMessage, _response: Http.ServerRe
             Database.findAll( findCallback );
         // Hier das neue find command
         case "find":
-            var studentId: number = parseInt( query["matrikel"] );
+            var matrikel: string = query["matrikel"];
+            if ( matrikel == null ) {
+                respond( _response, "Invalid matrikel sent" );
+                return;
+            }
+            var studentId: number = parseInt( matrikel );
             Database.find( studentId, findCallback );
             break;
         case "test":
