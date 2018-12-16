@@ -47,6 +47,9 @@ function handleRequest( _request: Http.IncomingMessage, _response: Http.ServerRe
             var studentId: number = parseInt( query["matrikel"] );
             Database.find( studentId, findCallback );
             break;
+        case "test":
+            respond( _response, "Service is up" );
+            break;
         default:
             respond( _response, "unknown command: " + command );
             break;

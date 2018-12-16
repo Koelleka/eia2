@@ -39,6 +39,9 @@ function handleRequest(_request, _response) {
             var studentId = parseInt(query["matrikel"]);
             Database.find(studentId, findCallback);
             break;
+        case "test":
+            respond(_response, "Service is up");
+            break;
         default:
             respond(_response, "unknown command: " + command);
             break;
