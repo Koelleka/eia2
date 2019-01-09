@@ -12,8 +12,16 @@ var Aufgabe9;
                 width: _width,
                 height: _height
             };
+            this.velocity = {
+                x: 0,
+                y: 0
+            };
         }
         ;
+        move(_speed) {
+            this.position.x += this.position.x * this.velocity.x * _speed;
+            this.position.y += this.position.y * this.velocity.y * _speed;
+        }
     }
     Aufgabe9.DrawObject = DrawObject;
     class Sky extends DrawObject {

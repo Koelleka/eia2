@@ -17,6 +17,7 @@ namespace Aufgabe9 {
     export abstract class DrawObject {
         position: Point;
         size: Size;
+        velocity: Point;
         constructor( _x: number, _y: number, _width: number, _height: number ) {
             this.position = {
                 x: _x,
@@ -26,9 +27,18 @@ namespace Aufgabe9 {
                 width: _width,
                 height: _height
             };
+            this.velocity = {
+                x: 0,
+                y: 0
+            };
         };
 
         public abstract draw( crc2: CanvasRenderingContext2D ): void;
+
+        public move( _speed: number ): void {
+            this.position.x += this.position.x * this.velocity.x * _speed;
+            this.position.y += this.position.y * this.velocity.y * _speed;
+        }
     }
 
     export class Sky extends DrawObject {
