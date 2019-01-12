@@ -13,8 +13,10 @@ declare namespace Aufgabe9 {
     abstract class DrawObject {
         position: Point;
         size: Size;
+        velocity: Point;
         constructor(_x: number, _y: number, _width: number, _height: number);
         abstract draw(crc2: CanvasRenderingContext2D): void;
+        move(_speed: number): void;
     }
     class Sky extends DrawObject {
         draw(crc2: CanvasRenderingContext2D): void;
