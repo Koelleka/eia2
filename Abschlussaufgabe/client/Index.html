@@ -1,0 +1,54 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css" ></link>
+ </head>
+ <body>
+ 
+ <div id="createPlayerDiv">
+ 	<label for="playerName">Spielername</label>
+ 	<input id="createPlayerInput" name="playerName" placeholder="Spielername"></input>
+ 	<button id="createPlayerButton">Name wählen</button>
+ </div>
+ 
+ <div id="lobbyOverview">
+ </div>
+ 
+ <div id="createLobby">
+ </div>
+ 
+  <div id="joinedLobby">
+ </div>
+ 
+  <div id="game">
+   <div style="top: 10px; left: 10px;" class="card"> 
+   Ablage
+ </div> 
+ 
+ <div style="top: 6px; right: 6px;" class="card"> </div> 
+ <div style="top: 8px; right: 8px;" class="card"> </div> 
+ <div id="deck" style="top: 10px; right: 10px;" class="card"> 
+   Kartenstapel 
+ </div> 
+ <button id="sortButton" type="button" style="bottom: 200px; left: 6px; position: absolute;">Sortieren</button>
+  
+ </div>
+ 	<script>var exports = {};</script>
+ 
+ 	<script src="../shared/CommandBase.js"></script>
+ 	<script src="../shared/PlayerBase.js"></script>
+ 	<script src="../shared/GameBase.js"></script>
+ 	<script src="../shared/LobbyBase.js"></script>
+ 	
+ 	<script src="AjaxHelper.js"></script>
+ 	
+	<script src="Command.js"></script>
+	<script src="Player.js"></script>
+	<script src="Game.js"></script>
+	<script src="Lobby.js"></script>
+	<script src="Card.js"></script>
+	<script src="Client.js"></script>
+ 
+</body>
+</html>

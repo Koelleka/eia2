@@ -1,11 +1,11 @@
 {
 	"name" : "Server",
 	"version" : "1.0.0",
-	"description" : "Database Test",
+	"description" : "Abschlussaufgabe Uno",
 	"author" : "Katharina Koelle",
-	"main" : "Aufgabe8/Server/Server.js",
+	"main" : "Abschlussaufgabe/server/Server.js",
 	"scripts" : {
-		"start" : "node Aufgabe8/Server/Server.js"
+		"start" : "node Abschlussaufgabe/server/Server.js"
 	},
 	"engines" : {
 		"node" : "8.10.0"
