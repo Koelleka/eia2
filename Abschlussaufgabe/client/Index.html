@@ -12,16 +12,31 @@
  	<button id="createPlayerButton">Name wählen</button>
  </div>
  
- <div id="lobbyOverview">
+ <div id="lobbyOverviewDiv" hidden>
+ 	<div>
+ 		<select id="lobbyList" size="5">
+
+		</select>
+		<button id="reloadLobbiesButton">Lobbies aktualisieren</button>
+		<button id="selectLobbyButton">Lobby wählen</button>
+		<input id="createLobbyInput"></input>
+	  	<button id="createLobbyButton">Lobby erstellen</button>
+ 	</div>
  </div>
  
- <div id="createLobby">
+ <div id="lobbyDiv" hidden>
+ 	<!-- Liste der Spieler in der Lobby -->
+ 	<div id="playerDiv">
+ 	</div>
+ 	<button id="leaveLobbyButton">Lobby verlassen</button>
+ 	<button id="startGameButton">Bereit (spiel starten)</button>
  </div>
  
-  <div id="joinedLobby">
+ <div id="waitDiv" hidden>
+ 	<h1>Warte auf alle Spieler...</h1>
  </div>
  
-  <div id="game">
+  <div id="gameDiv" hidden>
    <div style="top: 10px; left: 10px;" class="card"> 
    Ablage
  </div> 
@@ -35,11 +50,6 @@
   
  </div>
  	<script>var exports = {};</script>
- 
- 	<script src="../shared/CommandBase.js"></script>
- 	<script src="../shared/PlayerBase.js"></script>
- 	<script src="../shared/GameBase.js"></script>
- 	<script src="../shared/LobbyBase.js"></script>
  	
  	<script src="AjaxHelper.js"></script>
  	

@@ -6,5 +6,6 @@ declare namespace UnoClient {
         card: Card;
         lobby: Lobby;
         success: boolean;
+        lobbyList: Lobby[];
     }
 }

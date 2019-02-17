@@ -1,7 +1,6 @@
-var UnoServer;
-(function (UnoServer) {
-    class ServerEvent {
-    }
-    UnoServer.ServerEvent = ServerEvent;
-})(UnoServer || (UnoServer = {}));
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class ServerEvent {
+}
+exports.ServerEvent = ServerEvent;
 //# sourceMappingURL=ServerEvent.js.map

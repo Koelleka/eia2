@@ -7,11 +7,18 @@ namespace UnoClient {
 
         console.log( "init eventlistener" );
         ( <HTMLButtonElement>document.getElementById( "createPlayerButton" ) ).addEventListener( "click", createPlayer );
+        ( <HTMLButtonElement>document.getElementById( "reloadLobbiesButton" ) ).addEventListener( "click", getLobbies );
+        ( <HTMLButtonElement>document.getElementById( "selectLobbyButton" ) ).addEventListener( "click", joinLobby );
+        ( <HTMLButtonElement>document.getElementById( "createLobbyButton" ) ).addEventListener( "click", createLobby );
+        ( <HTMLButtonElement>document.getElementById( "leaveLobbyButton" ) ).addEventListener( "click", leaveLobby );
+        ( <HTMLButtonElement>document.getElementById( "startGameButton" ) ).addEventListener( "click", beReady );
 
         document.addEventListener( "createPlayer", createPlayerEventHandler );
         document.addEventListener( "playCard", playCardEventHandler );
         document.addEventListener( "pickCard", pickCardEventHandler );
         document.addEventListener( "createLobby", createLobbyEventHandler );
+        document.addEventListener( "getLobbies", getLobbiesEventHandler );
+        document.addEventListener( "getLobbyPlayers", getLobbyPlayersEventHandler );
         document.addEventListener( "joinLobby", joinLobbyEventHandler );
         document.addEventListener( "leaveLobby", leaveLobbyEventHandler );
         document.addEventListener( "ready", readyEventHandler );
@@ -37,12 +44,13 @@ namespace UnoClient {
 
         var clientEvent: ClientEvent = <ClientEvent>_e.detail;
         if ( clientEvent.success && clientEvent.player != null ) {
-            Lobby.currentLobby = clientEvent.lobby;
+            Player.currentPlayer = clientEvent.player;
             var element: HTMLElement = <HTMLElement>document.getElementById( "createPlayerDiv" );
             element.hidden = true;
 
             element = <HTMLElement>document.getElementById( "lobbyOverviewDiv" );
             element.hidden = false;
+            getLobbies();
         }
         else {
             alert( "Es ist ein Fehler aufgetreten" );
@@ -58,6 +66,8 @@ namespace UnoClient {
 
     function playCardEventHandler( _e: CustomEvent ): void {
         console.log( _e );
+        var event: ClientEvent = <ClientEvent>_e.detail;
+        // TODO Player X spielt Karte Y
     }
 
     function pickCard(): void {
@@ -70,10 +80,12 @@ namespace UnoClient {
         console.log( _e );
     }
 
-    function createLobby( _name: string ): void {
+    function createLobby(): void {
+        var element: HTMLInputElement = <HTMLInputElement>document.getElementById( "createLobbyInput" );
+        var lobbyName: string = element.value;
         var command: Command = new Command();
         command.command = "createLobby";
-        command.name = _name;
+        command.name = lobbyName;
         AjaxHelper.sendCommand( command );
     }
 
@@ -82,14 +94,25 @@ namespace UnoClient {
         var clientEvent: ClientEvent = <ClientEvent>_e.detail;
         if ( clientEvent.success && clientEvent.lobby != null ) {
             Lobby.currentLobby = clientEvent.lobby;
+
+            var element: HTMLElement = <HTMLElement>document.getElementById( "lobbyOverviewDiv" );
+            element.hidden = true;
+
+            element = <HTMLElement>document.getElementById( "lobbyDiv" );
+            element.hidden = false;
+        } else {
+            alert( "Es ist ein Fehler aufgetreten" );
         }
-        // TODO View abändern als Host
     }
 
-    function joinLobby( _lobby: Lobby ): void {
+    function joinLobby(): void {
+
+        var element: HTMLSelectElement = <HTMLSelectElement>document.getElementById( "lobbyList" );
+        var lobbyIdString: string = element.value;
+        var lobbyId: number = parseInt( lobbyIdString );
         var command: Command = new Command();
         command.command = "joinLobby";
-        command.lobbyId = _lobby.id;
+        command.lobbyId = lobbyId;
         AjaxHelper.sendCommand( command );
 
         // Button disablen
@@ -100,14 +123,20 @@ namespace UnoClient {
         var clientEvent: ClientEvent = <ClientEvent>_e.detail;
         if ( clientEvent.success && clientEvent.lobby != null ) {
             Lobby.currentLobby = clientEvent.lobby;
+
+            var element: HTMLElement = <HTMLElement>document.getElementById( "lobbyOverviewDiv" );
+            element.hidden = true;
+
+            element = <HTMLElement>document.getElementById( "lobbyDiv" );
+            element.hidden = false;
         }
-        // TODO View abändern
     }
 
-    function leaveLobby( _lobby: Lobby ): void {
+    function leaveLobby(): void {
+        var lobby: Lobby = Lobby.currentLobby;
         var command: Command = new Command();
         command.command = "leaveLobby";
-        command.lobbyId = _lobby.id;
+        command.lobbyId = lobby.id;
         AjaxHelper.sendCommand( command );
 
         // TODO button disablen
@@ -120,15 +149,53 @@ namespace UnoClient {
             Lobby.currentLobby = null;
         }
 
-        // TODO View abändern
+        var element: HTMLElement = <HTMLElement>document.getElementById( "lobbyOverviewDiv" );
+        element.hidden = false;
+
+        element = <HTMLElement>document.getElementById( "lobbyDiv" );
+        element.hidden = true;
     }
 
-    function ready(): void {
+    function getLobbies(): void {
+        var command: Command = new Command();
+        command.command = "getLobbies";
+        AjaxHelper.sendCommand( command );
+    }
+
+    function getLobbiesEventHandler( _e: CustomEvent ): void {
+        var clientEvent: ClientEvent = <ClientEvent>_e.detail;
+        if ( clientEvent.success && clientEvent.lobbyList != null ) {
+            var select: HTMLSelectElement = <HTMLSelectElement>document.getElementById( "lobbyList" );
+            var length: number = select.options.length;
+            for ( i = 0; i < length; i++ ) {
+                select.options[i] = null;
+            }
+
+            for ( var i: number = 0; i < clientEvent.lobbyList.length; i++ ) {
+                select.options[i] = new Option( clientEvent.lobbyList[i].name, clientEvent.lobbyList[i].id + "" );
+            }
+        }
+    }
+
+
+    function getLobbyPlayers( _lobby: Lobby ): void {
+        var command: Command = new Command();
+        command.command = "getLobbyPlayers";
+        command.lobbyId = _lobby.id;
+        AjaxHelper.sendCommand( command );
+    }
+
+    function getLobbyPlayersEventHandler( _e: CustomEvent ): void {
+        var clientEvent: ClientEvent = <ClientEvent>_e.detail;
+        if ( clientEvent.success ) {
+            console.log( "getLobbyPlayers result" );
+        }
+    }
+
+    function beReady(): void {
         var command: Command = new Command();
         command.command = "ready";
         AjaxHelper.sendCommand( command );
-
-        // Button disablen
     }
 
     function readyEventHandler( _e: CustomEvent ): void {
@@ -136,10 +203,14 @@ namespace UnoClient {
         var clientEvent: ClientEvent = <ClientEvent>_e.detail;
         if ( clientEvent.success ) {
             console.log( "i'm ready wait for other players" );
-            // Hier vielleicht noch den ready status aller spieler updaten
+            var element: HTMLElement = <HTMLElement>document.getElementById( "lobbyDiv" );
+            element.hidden = true;
+
+            element = <HTMLElement>document.getElementById( "waitDiv" );
+            element.hidden = false;
+
+            setTimeout(() => { beReady(); }, 1000 );
         }
-        // Es muss so lange Ready aufgerufen werden bis das start Event kommt
-        setTimeout(() => { ready(); }, 1000 );
     }
 
     function startEventHandler( _e: CustomEvent ): void {

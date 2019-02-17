@@ -2,13 +2,19 @@ var UnoClient;
 (function (UnoClient) {
     class AjaxHelper {
         static sendCommand(_command) {
-            console.log("send command");
-            if (UnoClient.Lobby.currentLobby != null)
+            console.log("send command= " + _command.command);
+            if (UnoClient.Lobby.currentLobby != null) {
                 _command.lobbyId = UnoClient.Lobby.currentLobby.id;
-            if (UnoClient.Game.currentGame != null)
+                console.log("lobbyid=" + UnoClient.Lobby.currentLobby.id);
+            }
+            if (UnoClient.Game.currentGame != null) {
                 _command.gameId = UnoClient.Game.currentGame.id;
-            if (UnoClient.Player.currentPlayer != null)
+                console.log("gameId=" + UnoClient.Game.currentGame.id);
+            }
+            if (UnoClient.Player.currentPlayer != null) {
                 _command.playerId = UnoClient.Player.currentPlayer.id;
+                console.log("playerId=" + UnoClient.Player.currentPlayer.id);
+            }
             this.sendRequestWithCustomData(_command);
         }
         // Code von SendData umgeschrieben

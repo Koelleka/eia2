@@ -2,16 +2,24 @@ namespace UnoClient {
 
     export class AjaxHelper {
         public static sendCommand( _command: Command ): void {
-            console.log( "send command" );
+            console.log( "send command= " + _command.command );
 
-            if ( Lobby.currentLobby != null )
+            if ( Lobby.currentLobby != null ) {
                 _command.lobbyId = Lobby.currentLobby.id;
+                console.log( "lobbyid=" + Lobby.currentLobby.id );
+            }
 
-            if ( Game.currentGame != null )
+
+            if ( Game.currentGame != null ) {
                 _command.gameId = Game.currentGame.id;
+                console.log( "gameId=" + Game.currentGame.id );
+            }
 
-            if ( Player.currentPlayer != null )
+
+            if ( Player.currentPlayer != null ) {
                 _command.playerId = Player.currentPlayer.id;
+                console.log( "playerId=" + Player.currentPlayer.id );
+            }
 
             this.sendRequestWithCustomData( _command );
         }

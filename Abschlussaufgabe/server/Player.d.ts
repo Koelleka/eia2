@@ -1,7 +1,8 @@
-declare namespace UnoServer {
-    class Player {
-        id: number;
-        name: string;
-        isReady: boolean;
-    }
+import { GameCard } from "./CardManager";
+export declare class Player {
+    id: number;
+    name: string;
+    cards: GameCard[];
+    isReady: boolean;
+    isComputer: boolean;
 }

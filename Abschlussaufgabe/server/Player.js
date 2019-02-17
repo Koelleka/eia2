@@ -1,7 +1,6 @@
-var UnoServer;
-(function (UnoServer) {
-    class Player {
-    }
-    UnoServer.Player = Player;
-})(UnoServer || (UnoServer = {}));
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class Player {
+}
+exports.Player = Player;
 //# sourceMappingURL=Player.js.map
