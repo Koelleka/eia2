@@ -1,4 +1,6 @@
 import { Lobby } from "./Lobby";
+import { Player } from "./Player";
+
 
 export class LobbyManager {
     private static _instance: LobbyManager;
@@ -8,13 +10,14 @@ export class LobbyManager {
         this.lobbies = [];
     }
 
-    public openLobby( _name: string ): Lobby {
+    public openLobby( _name: string, _player: Player ): Lobby {
         console.log( "openLobby " + _name );
         let lobby: Lobby = new Lobby();
         lobby.id = Math.floor( Math.random() * 10000 );
         lobby.name = _name;
         this.lobbies.push( lobby );
         console.log( "lobby created " + lobby.id );
+        lobby.join( _player.id );
         return lobby;
     }
 

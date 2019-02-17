@@ -10,6 +10,8 @@ var UnoClient;
         document.getElementById("createLobbyButton").addEventListener("click", createLobby);
         document.getElementById("leaveLobbyButton").addEventListener("click", leaveLobby);
         document.getElementById("startGameButton").addEventListener("click", beReady);
+        document.getElementById("deck").addEventListener("click", mouseClickOnDeck);
+        //document.addEventListener( "keydown", spaceKeyPressed );
         document.addEventListener("createPlayer", createPlayerEventHandler);
         document.addEventListener("playCard", playCardEventHandler);
         document.addEventListener("pickCard", pickCardEventHandler);
@@ -19,7 +21,17 @@ var UnoClient;
         document.addEventListener("joinLobby", joinLobbyEventHandler);
         document.addEventListener("leaveLobby", leaveLobbyEventHandler);
         document.addEventListener("ready", readyEventHandler);
-        document.addEventListener("start", startEventHandler);
+        document.addEventListener("startGame", startEventHandler);
+        document.addEventListener("getGameState", getGameStateHandler);
+    }
+    function mouseClickOnDeck(_event) {
+        pickCard();
+    }
+    function spaceKeyPressed(_event) {
+        var keyCode = _event.keyCode;
+        if (keyCode == 32) {
+            pickCard();
+        }
     }
     function createPlayer() {
         var element = document.getElementById("createPlayerInput");
@@ -48,16 +60,20 @@ var UnoClient;
             alert("Es ist ein Fehler aufgetreten");
         }
     }
-    function playCard(_card) {
+    function playCard(_id) {
         var command = new UnoClient.Command();
         command.command = "playCard";
-        command.cardId = _card.id;
+        command.cardId = _id;
         UnoClient.AjaxHelper.sendCommand(command);
     }
     function playCardEventHandler(_e) {
         console.log(_e);
         var event = _e.detail;
-        // TODO Player X spielt Karte Y
+        if (event.success) {
+            topCardZIndex++;
+            var cardDiv = document.getElementById(event.card.id + "");
+            cardDiv.removeEventListener("click", mouseClickOnMyCard);
+        }
     }
     function pickCard() {
         var command = new UnoClient.Command();
@@ -173,7 +189,7 @@ var UnoClient;
             element.hidden = true;
             element = document.getElementById("waitDiv");
             element.hidden = false;
-            setTimeout(() => { beReady(); }, 1000);
+            setTimeout(function () { beReady(); }, 1000);
         }
     }
     function startEventHandler(_e) {
@@ -182,7 +198,123 @@ var UnoClient;
         if (clientEvent.success) {
             console.log("all players ready let's go");
         }
-        // TODO view
+        var element = document.getElementById("lobbyDiv");
+        element.hidden = true;
+        element = document.getElementById("waitDiv");
+        element.hidden = true;
+        element = document.getElementById("gameDiv");
+        element.hidden = false;
+        getGameState();
+    }
+    function getGameState() {
+        var command = new UnoClient.Command();
+        command.command = "getGameState";
+        UnoClient.AjaxHelper.sendCommand(command);
+    }
+    function getGameStateHandler(_e) {
+        var clientEvent = _e.detail;
+        if (clientEvent.success) {
+            if (!clientEvent.game.isGameOver) {
+                updateGameView(clientEvent.game);
+                setTimeout(function () { getGameState(); }, 1000);
+            }
+            else {
+                var element = document.getElementById("gameDiv");
+                element.hidden = true;
+                element = document.getElementById("winnerDiv");
+                element.hidden = false;
+                element = document.getElementById("winnerSpan");
+                element.innerHTML = clientEvent.game.winner.name;
+            }
+        }
+    }
+    function updateGameView(_game) {
+        redrawCards();
+        //        if ( _game.currentPlayer.isMe() ) {
+        //            console.log( "it's my turn" );
+        //        } 
+    }
+    function createCard(_card) {
+        //<div class="card">  //erzeugen vonHTMLtags, karten anzeigen
+        var cardDiv = document.createElement("div"); //document, html element erstellen typ div
+        cardDiv.className = "card";
+        cardDiv.id = _card.id + "";
+        // <div class="bg green"></div> 
+        var bg = document.createElement("div");
+        bg.className = "bg " + _card.color;
+        cardDiv.appendChild(bg); //fügt den hintergrund dieser Karte hinzu - verschachtelt angefügt
+        // <div class="circle"></div> //Ellipse der Karte hinzufügen
+        var kreis = document.createElement("div");
+        kreis.className = "circle";
+        cardDiv.appendChild(kreis); //fügt die Ellipse dieser einen Karte hinzu 
+        //  <div class="top-left">9</div> 
+        var obenLinks = document.createElement("div");
+        obenLinks.className = "top-left";
+        obenLinks.innerHTML = _card.type; //was kommt auf diese karte drauf idF Zahl
+        cardDiv.appendChild(obenLinks); //fügt die zahl oben links dieser Karte hinzu
+        //  <div class="center">9</div> 
+        var zentrum = document.createElement("div");
+        zentrum.className = "center";
+        zentrum.innerHTML = _card.type; //was kommt auf diese Karte idF die Zahl zentriert
+        cardDiv.appendChild(zentrum); //fügt die Zahl zentriert dieser Karte hinzu
+        // <div class="bottom-right">9</div> 
+        var untenRechts = document.createElement("div");
+        untenRechts.className = "bottom-right";
+        untenRechts.innerHTML = _card.type;
+        cardDiv.appendChild(untenRechts);
+        return cardDiv;
+    }
+    function redrawCards() {
+        var myCards = document.getElementsByClassName("myCard");
+        for (var i = 0; i < myCards.length; i++) {
+            var myCard = myCards[i];
+            myCard.remove();
+        }
+        var gameDiv = document.getElementById("gameDiv");
+        var otherOpponentCount = 0;
+        for (i = 0; i < UnoClient.Game.currentGame.players.length; i++) {
+            var player = UnoClient.Game.currentGame.players[i];
+            if (player.isMe()) {
+                for (var j = 0; j < player.cards.length; j++) {
+                    var card = player.cards[j];
+                    var cardDiv = document.getElementById(card.id + "");
+                    if (cardDiv == null) {
+                        cardDiv = createCard(card);
+                        cardDiv.classList.add("myCard");
+                        gameDiv.appendChild(cardDiv);
+                    }
+                    var style_1 = cardDiv.style;
+                    style_1.left = 10 + j * 80 + "px";
+                    style_1.bottom = "10px";
+                    style_1.zIndex = (j + 1) + "";
+                    cardDiv.removeEventListener("click", mouseClickOnMyCard);
+                    cardDiv.addEventListener("click", mouseClickOnMyCard);
+                }
+            }
+            else {
+                var element = document.getElementById("otherPlayerName" + otherOpponentCount);
+                element.innerText = player.name + ": ";
+                element = document.getElementById("otherPlayerCards" + otherOpponentCount);
+                element.innerText = player.cards.length + " Karten";
+                otherOpponentCount++;
+            }
+        }
+        var topCardDiv = document.getElementById(UnoClient.Game.currentGame.topCard.id + "");
+        if (topCardDiv == null) {
+            topCardDiv = createCard(UnoClient.Game.currentGame.topCard);
+            gameDiv.appendChild(topCardDiv);
+        }
+        var style = topCardDiv.style;
+        style.left = "10px";
+        style.top = "10px";
+        style.zIndex = topCardZIndex + "";
+    }
+    var topCardZIndex = 1;
+    function mouseClickOnMyCard(_event) {
+        var divCard = _event.currentTarget;
+        var id = divCard.id;
+        var cardId = parseInt(id);
+        playCard(cardId);
     }
 })(UnoClient || (UnoClient = {}));
 //# sourceMappingURL=Client.js.map

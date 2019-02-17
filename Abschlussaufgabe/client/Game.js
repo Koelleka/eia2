@@ -1,7 +1,10 @@
 var UnoClient;
 (function (UnoClient) {
-    class Game {
-    }
+    var Game = (function () {
+        function Game() {
+        }
+        return Game;
+    }());
     UnoClient.Game = Game;
 })(UnoClient || (UnoClient = {}));
 //# sourceMappingURL=Game.js.map

@@ -1,7 +1,10 @@
 var UnoClient;
 (function (UnoClient) {
-    class Lobby {
-    }
+    var Lobby = (function () {
+        function Lobby() {
+        }
+        return Lobby;
+    }());
     UnoClient.Lobby = Lobby;
 })(UnoClient || (UnoClient = {}));
 //# sourceMappingURL=Lobby.js.map

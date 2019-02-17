@@ -1,20 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Lobby_1 = require("./Lobby");
-class LobbyManager {
-    constructor() {
+var Lobby_1 = require("./Lobby");
+var LobbyManager = (function () {
+    function LobbyManager() {
         this.lobbies = [];
     }
-    openLobby(_name) {
+    LobbyManager.prototype.openLobby = function (_name, _player) {
         console.log("openLobby " + _name);
-        let lobby = new Lobby_1.Lobby();
+        var lobby = new Lobby_1.Lobby();
         lobby.id = Math.floor(Math.random() * 10000);
         lobby.name = _name;
         this.lobbies.push(lobby);
         console.log("lobby created " + lobby.id);
+        lobby.join(_player.id);
         return lobby;
-    }
-    closeLobby(_id) {
+    };
+    LobbyManager.prototype.closeLobby = function (_id) {
         console.log("closeLobby " + _id);
         var lobby = this.getLobby(_id);
         if (lobby != null) {
@@ -23,8 +24,8 @@ class LobbyManager {
                 return _obj.id != _id;
             });
         }
-    }
-    getLobby(_id) {
+    };
+    LobbyManager.prototype.getLobby = function (_id) {
         for (var i = 0; i < this.lobbies.length; i++) {
             var lobby = this.lobbies[i];
             if (lobby.id == _id) {
@@ -32,14 +33,19 @@ class LobbyManager {
             }
         }
         return null;
-    }
-    getLobbies() {
+    };
+    LobbyManager.prototype.getLobbies = function () {
         return this.lobbies;
-    }
-    // https://stackoverflow.com/a/36978360
-    static get Instance() {
-        return this._instance || (this._instance = new this());
-    }
-}
+    };
+    Object.defineProperty(LobbyManager, "Instance", {
+        // https://stackoverflow.com/a/36978360
+        get: function () {
+            return this._instance || (this._instance = new this());
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return LobbyManager;
+}());
 exports.LobbyManager = LobbyManager;
 //# sourceMappingURL=LobbyManager.js.map

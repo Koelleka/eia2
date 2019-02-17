@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class ServerEvent {
-}
+var ServerEvent = (function () {
+    function ServerEvent() {
+    }
+    return ServerEvent;
+}());
 exports.ServerEvent = ServerEvent;
 //# sourceMappingURL=ServerEvent.js.map

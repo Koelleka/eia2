@@ -1,6 +1,8 @@
 namespace UnoClient {
     export class Card {
         public id: number;
-        public s: string;
+        public color: string;
+        public type: string;
+        public isJoker: boolean;
     }
 }

@@ -68,6 +68,7 @@ export class PlayCardCommand extends Command {
         }
 
         event.player = _game.currentPlayer;
+        event.game.checkIfCurrentPlayerIsComputerAndPlayIfTrue();
 
         return event;
     }
@@ -93,6 +94,8 @@ export class PickCardCommand extends Command {
         event.player = nextPlayer;
         event.success = true;
 
+        event.game.checkIfCurrentPlayerIsComputerAndPlayIfTrue();
+
         return event;
     }
 }
@@ -107,7 +110,7 @@ export class CreateLobbyCommand extends Command {
     public execute( _game: Game, _lobby: Lobby, _player: Player, _card: GameCard, _name: string ): ServerEvent {
         super.execute( _game, _lobby, _player, _card, _name );
 
-        var lobby: Lobby = LobbyManager.Instance.openLobby( _name );
+        var lobby: Lobby = LobbyManager.Instance.openLobby( _name, _player );
         var resultEvent: ServerEvent = new ServerEvent();
         resultEvent.type = this.command;
         if ( lobby != null ) {
@@ -151,10 +154,7 @@ export class JoinLobbyCommand extends Command {
         var resultEvent: ServerEvent = new ServerEvent();
         resultEvent.type = this.command;
         resultEvent.success = success;
-
-        if ( success ) {
-            resultEvent.lobby = _lobby;
-        }
+        resultEvent.lobby = _lobby;
 
         return resultEvent;
     }
@@ -210,8 +210,29 @@ export class ReadyCommand extends Command {
         if ( _lobby.allPlayersReady() ) {
             resultEvent.type = "startGame";
             resultEvent.game = _lobby.startGame();
+            resultEvent.game.checkIfCurrentPlayerIsComputerAndPlayIfTrue();
         }
         return resultEvent;
     }
 }
-//}
+
+export class GetGameStateCommand extends Command {
+    public constructor() {
+        super();
+        this.command = "getGameState";
+    }
+
+    public execute( _game: Game, _lobby: Lobby, _player: Player, _card: GameCard, _name: string ): ServerEvent {
+        super.execute( _game, _lobby, _player, _card, _name );
+
+        var resultEvent: ServerEvent = new ServerEvent();
+        resultEvent.type = this.command;
+        resultEvent.success = true;
+        resultEvent.game = _game;
+        if ( resultEvent.game == null && _lobby != null ) {
+            resultEvent.game = _lobby.game;
+            resultEvent.game.checkIfPlayerWonGame();
+        }
+        return resultEvent;
+    }
+}

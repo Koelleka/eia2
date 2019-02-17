@@ -5,6 +5,7 @@ namespace UnoClient {
         public game: Game;
         public card: Card;
         public lobby: Lobby;
+        public currentPlayerId: number;
         public success: boolean;
         public lobbyList: Lobby[];
     }

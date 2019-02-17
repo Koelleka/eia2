@@ -5,4 +5,8 @@ export class Player {
     public cards: GameCard[];
     public isReady: boolean;
     public isComputer: boolean;
-}  
+
+    public constructor() {
+        this.cards = [];
+    }
+}   

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Command_1 = require("./Command");
-class CommandManager {
-    constructor() {
+var Command_1 = require("./Command");
+var CommandManager = (function () {
+    function CommandManager() {
         this.commands = {};
         this.addCommand(new Command_1.CreatePlayerCommand());
         this.addCommand(new Command_1.PlayCardCommand());
@@ -13,17 +13,23 @@ class CommandManager {
         this.addCommand(new Command_1.LeaveLobbyCommand());
         this.addCommand(new Command_1.GetLobbyPlayersCommand());
         this.addCommand(new Command_1.ReadyCommand());
+        this.addCommand(new Command_1.GetGameStateCommand());
     }
-    addCommand(_command) {
+    CommandManager.prototype.addCommand = function (_command) {
         this.commands[_command.command] = _command;
-    }
-    getCommand(_command) {
+    };
+    CommandManager.prototype.getCommand = function (_command) {
         return this.commands[_command];
-    }
-    // https://stackoverflow.com/a/36978360
-    static get Instance() {
-        return this._instance || (this._instance = new this());
-    }
-}
+    };
+    Object.defineProperty(CommandManager, "Instance", {
+        // https://stackoverflow.com/a/36978360
+        get: function () {
+            return this._instance || (this._instance = new this());
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return CommandManager;
+}());
 exports.CommandManager = CommandManager;
 //# sourceMappingURL=CommandManager.js.map

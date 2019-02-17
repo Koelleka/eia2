@@ -3,19 +3,19 @@ var Uno2;
     document.addEventListener("DOMContentLoaded", start);
     // Mit den Infos bauen wir später alle Karten die es gibt
     //alle Farben die es gibt 
-    let cardColors = ["red", "blue", "green", "yellow"];
+    var cardColors = ["red", "blue", "green", "yellow"];
     //Alle vorhandenen Aktionskarten ges. Spiel
-    let actionCards = ["+2", "<>", "A"]; // 12 stk / 2 pro Farbe / A = Aussetzen
-    let jokerCards = ["FW", "+4"]; // 4 pro Joker FW = Farbe wählen
-    let numberCards = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    var actionCards = ["+2", "<>", "A"]; // 12 stk / 2 pro Farbe / A = Aussetzen
+    var jokerCards = ["FW", "+4"]; // 4 pro Joker FW = Farbe wählen
+    var numberCards = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     var players;
     // Alle noch verfügbaren Karten im Spiel
     var deck;
     var playedCards;
-    let topCardZIndex = 1; // Das Z-Level der gespielten Karten
+    var topCardZIndex = 1; // Das Z-Level der gespielten Karten
     // Eine Klasse um eine Karte zu beschreiben (farbe + art)
-    class Card {
-        constructor(_color, _type, _value, _isJoker, _id) {
+    var Card = (function () {
+        function Card(_color, _type, _value, _isJoker, _id) {
             this.color = _color; //this=zugriff auf "farbe, art"
             this.type = _type; //this=Eigenreferenz 
             this.isJoker = _isJoker;
@@ -39,22 +39,24 @@ var Uno2;
                 this.sortValue = 0;
             }
         }
-    }
+        return Card;
+    }());
     Uno2.Card = Card;
-    class Player {
-        constructor(_name) {
+    var Player = (function () {
+        function Player(_name) {
             this.name = _name;
             this.cards = [];
         }
-        getCardById(_id) {
+        Player.prototype.getCardById = function (_id) {
             for (var i = 0; i < this.cards.length; i++) {
                 if (this.cards[i].cardId == _id) {
                     return this.cards[i];
                 }
             }
             return null;
-        }
-    }
+        };
+        return Player;
+    }());
     Uno2.Player = Player;
     // Spiel initialisieren
     function start() {
@@ -132,7 +134,7 @@ var Uno2;
     }
     function pickRandomCard() {
         // Anzahl verbleibender Karten im deck
-        let remainingCardsInDeck = deck.length;
+        var remainingCardsInDeck = deck.length;
         // Nur wenn noch Karten im Stapel sind, kann man auch eine Ziehen!
         if (remainingCardsInDeck > 0) {
             // Zufälligen Index erzeugen, welche Karte wir aus dem deck nehmen
@@ -147,10 +149,10 @@ var Uno2;
         return null;
     }
     function mouseClickOnMyCard(_event) {
-        let divCard = _event.currentTarget;
+        var divCard = _event.currentTarget;
         // nicht das Target nehmen, weil wir auch geschachtelte divs haben 
         // und dann evtl das falsche HTML Element im Event liegt
-        let id = divCard.id;
+        var id = divCard.id;
         var player = getHumanPlayer();
         var card = player.getCardById(id);
         if (card != null) {
@@ -170,9 +172,9 @@ var Uno2;
         }
     }
     function pickAndDrawCard() {
-        let player = getHumanPlayer();
-        let card = pickRandomCardForPlayer(player);
-        let cardDiv = createCard(card);
+        var player = getHumanPlayer();
+        var card = pickRandomCardForPlayer(player);
+        var cardDiv = createCard(card);
         document.body.appendChild(cardDiv);
         cardDiv.addEventListener("click", mouseClickOnMyCard);
         redrawMyCards();
@@ -207,8 +209,8 @@ var Uno2;
         var player = getHumanPlayer();
         for (var i = 0; i < player.cards.length; i++) {
             var card = player.cards[i];
-            let cardDiv = createCard(card);
-            let style = cardDiv.style;
+            var cardDiv = createCard(card);
+            var style = cardDiv.style;
             style.left = 10 + i * 80 + "px";
             style.bottom = "10px";
             document.body.appendChild(cardDiv); //Karte HTML body hinzufügen
@@ -217,29 +219,29 @@ var Uno2;
     }
     function createCard(_card) {
         //<div class="card">  //erzeugen vonHTMLtags, karten anzeigen
-        let cardDiv = document.createElement("div"); //document, html element erstellen typ div
+        var cardDiv = document.createElement("div"); //document, html element erstellen typ div
         cardDiv.className = "card";
         cardDiv.id = _card.cardId;
         // <div class="bg green"></div> 
-        let bg = document.createElement("div");
+        var bg = document.createElement("div");
         bg.className = "bg " + _card.color;
         cardDiv.appendChild(bg); //fügt den hintergrund dieser Karte hinzu - verschachtelt angefügt
         // <div class="circle"></div> //Ellipse der Karte hinzufügen
-        let kreis = document.createElement("div");
+        var kreis = document.createElement("div");
         kreis.className = "circle";
         cardDiv.appendChild(kreis); //fügt die Ellipse dieser einen Karte hinzu 
         //  <div class="top-left">9</div> 
-        let obenLinks = document.createElement("div");
+        var obenLinks = document.createElement("div");
         obenLinks.className = "top-left";
         obenLinks.innerHTML = _card.type; //was kommt auf diese karte drauf idF Zahl
         cardDiv.appendChild(obenLinks); //fügt die zahl oben links dieser Karte hinzu
         //  <div class="center">9</div> 
-        let zentrum = document.createElement("div");
+        var zentrum = document.createElement("div");
         zentrum.className = "center";
         zentrum.innerHTML = _card.type; //was kommt auf diese Karte idF die Zahl zentriert
         cardDiv.appendChild(zentrum); //fügt die Zahl zentriert dieser Karte hinzu
         // <div class="bottom-right">9</div> 
-        let untenRechts = document.createElement("div");
+        var untenRechts = document.createElement("div");
         untenRechts.className = "bottom-right";
         untenRechts.innerHTML = _card.type;
         cardDiv.appendChild(untenRechts);
@@ -248,17 +250,17 @@ var Uno2;
     function redrawMyCards() {
         var player = getHumanPlayer();
         for (var i = 0; i < player.cards.length; i++) {
-            let card = player.cards[i];
-            let cardDiv = document.getElementById(card.cardId);
-            let style = cardDiv.style;
+            var card = player.cards[i];
+            var cardDiv = document.getElementById(card.cardId);
+            var style = cardDiv.style;
             style.left = 10 + i * 80 + "px";
             style.bottom = "10px";
             style.zIndex = (i + 1) + "";
         }
     }
     function drawPlayedCard(_card) {
-        let cardDiv = document.getElementById(_card.cardId);
-        let style = cardDiv.style;
+        var cardDiv = document.getElementById(_card.cardId);
+        var style = cardDiv.style;
         style.left = "10px";
         style.top = "10px";
         style.zIndex = (++topCardZIndex) + "";

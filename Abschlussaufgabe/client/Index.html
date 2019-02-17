@@ -36,19 +36,27 @@
  	<h1>Warte auf alle Spieler...</h1>
  </div>
  
-  <div id="gameDiv" hidden>
+ <div id="gameDiv" hidden>
    <div style="top: 10px; left: 10px;" class="card"> 
    Ablage
- </div> 
+   </div> 
+   <div id="otherPlayers" style="top:10px; right: 200px; position: absolute;">
+   		<p><span id="otherPlayerName0"></span><span id="otherPlayerCards0"></span></p>
+   		<p><span id="otherPlayerName1"></span><span id="otherPlayerCards1"></span></p>
+   		<p><span id="otherPlayerName2"></span><span id="otherPlayerCards2"></span></p>
+   </div>
  
- <div style="top: 6px; right: 6px;" class="card"> </div> 
- <div style="top: 8px; right: 8px;" class="card"> </div> 
- <div id="deck" style="top: 10px; right: 10px;" class="card"> 
+   <div style="top: 6px; right: 6px;" class="card"> </div> 
+   <div style="top: 8px; right: 8px;" class="card"> </div> 
+   <div id="deck" style="top: 10px; right: 10px;" class="card"> 
    Kartenstapel 
- </div> 
- <button id="sortButton" type="button" style="bottom: 200px; left: 6px; position: absolute;">Sortieren</button>
-  
- </div>
+   </div> 
+</div>
+
+<div id="winnerDiv" hidden>
+	<h1><span>And the winner is: </span><span id="winnerSpan"></span></h1>
+</div>
+
  	<script>var exports = {};</script>
  	
  	<script src="AjaxHelper.js"></script>
@@ -59,6 +67,7 @@
 	<script src="Lobby.js"></script>
 	<script src="Card.js"></script>
 	<script src="Client.js"></script>
+	<script src="ClientEvent.js"></script>
  
 </body>
 </html>

@@ -18,7 +18,7 @@ export class CardManager {
     private initCards(): void {
         let cardColors: string[] = ["red", "blue", "green", "yellow"];
         let actionCards: string[] = ["+2", "<>", "A"]; // 12 stk / 2 pro Farbe / A = Aussetzen
-        let jokerCards: string[] = ["FW", "+4"]; // 4 pro Joker FW = Farbe wählen
+        let jokerCards: string[] = [/*"FW", "+4"*/]; // 4 pro Joker FW = Farbe wählen
         let numberCards: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
         this.cards = [];

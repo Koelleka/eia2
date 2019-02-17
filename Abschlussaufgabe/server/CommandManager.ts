@@ -1,4 +1,4 @@
-import { Command, CreatePlayerCommand, PlayCardCommand, PickCardCommand, CreateLobbyCommand, GetLobbiesCommand, JoinLobbyCommand, LeaveLobbyCommand, GetLobbyPlayersCommand, ReadyCommand } from "./Command";
+import { Command, CreatePlayerCommand, PlayCardCommand, PickCardCommand, CreateLobbyCommand, GetLobbiesCommand, JoinLobbyCommand, LeaveLobbyCommand, GetLobbyPlayersCommand, ReadyCommand, GetGameStateCommand } from "./Command";
 
 //https://stackoverflow.com/a/13631733
 export interface CommandMap {
@@ -21,6 +21,7 @@ export class CommandManager {
         this.addCommand( new LeaveLobbyCommand() );
         this.addCommand( new GetLobbyPlayersCommand() );
         this.addCommand( new ReadyCommand() );
+        this.addCommand( new GetGameStateCommand() );
     }
 
     public addCommand( _command: Command ): void {

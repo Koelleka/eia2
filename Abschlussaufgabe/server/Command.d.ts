@@ -48,3 +48,7 @@ export declare class ReadyCommand extends Command {
     constructor();
     execute(_game: Game, _lobby: Lobby, _player: Player, _card: GameCard, _name: string): ServerEvent;
 }
+export declare class GetGameStateCommand extends Command {
+    constructor();
+    execute(_game: Game, _lobby: Lobby, _player: Player, _card: GameCard, _name: string): ServerEvent;
+}

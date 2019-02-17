@@ -48,11 +48,11 @@ function handleRequest( _request: Http.IncomingMessage, _response: Http.ServerRe
     if ( playerIdString != null ) {
         var playerId: number = parseInt( playerIdString );
         player = PlayerManager.Instance.getPlayer( playerId );
-        if ( player != null ) {
-            console.log( "player= " + player.name );
-        } else {
-            console.log( "player not found= " + playerIdString );
-        }
+        //        if ( player != null ) {
+        //            console.log( "player= " + player.name );
+        //        } else {
+        //            console.log( "player not found= " + playerIdString );
+        //        }
     }
 
     var lobbyIdString: string = query["lobbyId"];
@@ -61,17 +61,14 @@ function handleRequest( _request: Http.IncomingMessage, _response: Http.ServerRe
         lobby = LobbyManager.Instance.getLobby( lobbyId );
         if ( lobby != null ) {
             game = lobby.game;
-            console.log( "lobby= " + lobby.name );
-        } else {
-            console.log( "lobby not found= " + lobbyIdString );
         }
     }
 
-    if ( lobby != null && game != null ) {
-        console.log( "game= " + game.id );
-    } else if ( lobby != null && game == null ) {
-        console.log( "game not found. lobbyid= " + lobby.id );
-    }
+    //    if ( lobby != null && game != null ) {
+    //        console.log( "game= " + game.id );
+    //    } else if ( lobby != null && game == null ) {
+    //        console.log( "game not found. lobbyid= " + lobby.id );
+    //    }
 
     var cardIdString: string = query["cardId"];
     if ( cardIdString != null ) {

@@ -1,18 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class GameCard {
-}
+var GameCard = (function () {
+    function GameCard() {
+    }
+    return GameCard;
+}());
 exports.GameCard = GameCard;
-class CardManager {
-    constructor() {
+var CardManager = (function () {
+    function CardManager() {
         this.cards = [];
         this.initCards();
     }
-    initCards() {
-        let cardColors = ["red", "blue", "green", "yellow"];
-        let actionCards = ["+2", "<>", "A"]; // 12 stk / 2 pro Farbe / A = Aussetzen
-        let jokerCards = ["FW", "+4"]; // 4 pro Joker FW = Farbe wählen
-        let numberCards = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    CardManager.prototype.initCards = function () {
+        var cardColors = ["red", "blue", "green", "yellow"];
+        var actionCards = ["+2", "<>", "A"]; // 12 stk / 2 pro Farbe / A = Aussetzen
+        var jokerCards = []; // 4 pro Joker FW = Farbe wählen
+        var numberCards = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
         this.cards = [];
         var counter = 0;
         for (var i = 0; i < cardColors.length; i++) {
@@ -51,17 +54,22 @@ class CardManager {
                 this.cards.push(card);
             }
         }
-    }
-    getCard(_id) {
+    };
+    CardManager.prototype.getCard = function (_id) {
         for (var i = 0; i < this.cards.length; i++) {
             if (this.cards[i].id == _id)
                 return this.cards[i];
         }
-    }
-    // https://stackoverflow.com/a/36978360
-    static get Instance() {
-        return this._instance || (this._instance = new this());
-    }
-}
+    };
+    Object.defineProperty(CardManager, "Instance", {
+        // https://stackoverflow.com/a/36978360
+        get: function () {
+            return this._instance || (this._instance = new this());
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return CardManager;
+}());
 exports.CardManager = CardManager;
 //# sourceMappingURL=CardManager.js.map

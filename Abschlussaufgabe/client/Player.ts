@@ -6,5 +6,9 @@ namespace UnoClient {
         public cards: Card[]; // Das sind die eigenen Karten
         public isComputer: boolean;
         public static currentPlayer: Player;
+
+        public isMe(): boolean {
+            return this.id == Player.currentPlayer.id;
+        }
     }
 }

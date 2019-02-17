@@ -5,4 +5,5 @@ export declare class Player {
     cards: GameCard[];
     isReady: boolean;
     isComputer: boolean;
+    constructor();
 }

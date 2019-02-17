@@ -13,6 +13,9 @@ namespace UnoClient {
         ( <HTMLButtonElement>document.getElementById( "leaveLobbyButton" ) ).addEventListener( "click", leaveLobby );
         ( <HTMLButtonElement>document.getElementById( "startGameButton" ) ).addEventListener( "click", beReady );
 
+        document.getElementById( "deck" ).addEventListener( "click", mouseClickOnDeck );
+        //document.addEventListener( "keydown", spaceKeyPressed );
+
         document.addEventListener( "createPlayer", createPlayerEventHandler );
         document.addEventListener( "playCard", playCardEventHandler );
         document.addEventListener( "pickCard", pickCardEventHandler );
@@ -22,7 +25,19 @@ namespace UnoClient {
         document.addEventListener( "joinLobby", joinLobbyEventHandler );
         document.addEventListener( "leaveLobby", leaveLobbyEventHandler );
         document.addEventListener( "ready", readyEventHandler );
-        document.addEventListener( "start", startEventHandler );
+        document.addEventListener( "startGame", startEventHandler );
+        document.addEventListener( "getGameState", getGameStateHandler );
+    }
+
+    function mouseClickOnDeck( _event: MouseEvent ): void {
+        pickCard();
+    }
+
+    function spaceKeyPressed( _event: KeyboardEvent ): void {
+        var keyCode: number = _event.keyCode;
+        if ( keyCode == 32 ) {
+            pickCard();
+        }
     }
 
     function createPlayer(): void {
@@ -57,17 +72,21 @@ namespace UnoClient {
         }
     }
 
-    function playCard( _card: Card ): void {
+    function playCard( _id: number ): void {
         var command: Command = new Command();
         command.command = "playCard";
-        command.cardId = _card.id;
+        command.cardId = _id;
         AjaxHelper.sendCommand( command );
     }
 
     function playCardEventHandler( _e: CustomEvent ): void {
         console.log( _e );
         var event: ClientEvent = <ClientEvent>_e.detail;
-        // TODO Player X spielt Karte Y
+        if ( event.success ) {
+            topCardZIndex++;
+            var cardDiv: HTMLElement = <HTMLElement>document.getElementById( event.card.id + "" );
+            cardDiv.removeEventListener( "click", mouseClickOnMyCard );
+        }
     }
 
     function pickCard(): void {
@@ -219,6 +238,151 @@ namespace UnoClient {
         if ( clientEvent.success ) {
             console.log( "all players ready let's go" );
         }
-        // TODO view
+
+        var element: HTMLElement = <HTMLElement>document.getElementById( "lobbyDiv" );
+        element.hidden = true;
+
+        element = <HTMLElement>document.getElementById( "waitDiv" );
+        element.hidden = true;
+
+        element = <HTMLElement>document.getElementById( "gameDiv" );
+        element.hidden = false;
+
+        getGameState();
+    }
+
+    function getGameState(): void {
+        var command: Command = new Command();
+        command.command = "getGameState";
+        AjaxHelper.sendCommand( command );
+    }
+
+
+    function getGameStateHandler( _e: CustomEvent ): void {
+        var clientEvent: ClientEvent = <ClientEvent>_e.detail;
+        if ( clientEvent.success ) {
+            if ( !clientEvent.game.isGameOver ) {
+                updateGameView( clientEvent.game );
+                setTimeout(() => { getGameState(); }, 1000 );
+            } else {
+                var element: HTMLElement = <HTMLElement>document.getElementById( "gameDiv" );
+                element.hidden = true;
+
+                element = <HTMLElement>document.getElementById( "winnerDiv" );
+                element.hidden = false;
+
+                element = <HTMLElement>document.getElementById( "winnerSpan" );
+                element.innerHTML = clientEvent.game.winner.name;
+            }
+        }
+    }
+
+    function updateGameView( _game: Game ): void {
+        redrawCards();
+
+        //        if ( _game.currentPlayer.isMe() ) {
+        //            console.log( "it's my turn" );
+        //        } 
+    }
+
+    function createCard( _card: Card ): HTMLDivElement {
+        //<div class="card">  //erzeugen vonHTMLtags, karten anzeigen
+        let cardDiv: HTMLDivElement = document.createElement( "div" ); //document, html element erstellen typ div
+        cardDiv.className = "card";
+        cardDiv.id = _card.id + "";
+
+        // <div class="bg green"></div> 
+        let bg: HTMLDivElement = document.createElement( "div" );
+        bg.className = "bg " + _card.color;
+        cardDiv.appendChild( bg ); //fügt den hintergrund dieser Karte hinzu - verschachtelt angefügt
+
+        // <div class="circle"></div> //Ellipse der Karte hinzufügen
+        let kreis: HTMLDivElement = document.createElement( "div" );
+        kreis.className = "circle";
+        cardDiv.appendChild( kreis ); //fügt die Ellipse dieser einen Karte hinzu 
+
+        //  <div class="top-left">9</div> 
+        let obenLinks: HTMLDivElement = document.createElement( "div" );
+        obenLinks.className = "top-left";
+        obenLinks.innerHTML = _card.type; //was kommt auf diese karte drauf idF Zahl
+        cardDiv.appendChild( obenLinks ); //fügt die zahl oben links dieser Karte hinzu
+
+        //  <div class="center">9</div> 
+        let zentrum: HTMLDivElement = document.createElement( "div" );
+        zentrum.className = "center";
+        zentrum.innerHTML = _card.type; //was kommt auf diese Karte idF die Zahl zentriert
+        cardDiv.appendChild( zentrum ); //fügt die Zahl zentriert dieser Karte hinzu
+
+        // <div class="bottom-right">9</div> 
+        let untenRechts: HTMLDivElement = document.createElement( "div" );
+        untenRechts.className = "bottom-right";
+        untenRechts.innerHTML = _card.type;
+        cardDiv.appendChild( untenRechts );
+
+        return cardDiv;
+    }
+
+    function redrawCards(): void {
+
+        var myCards: HTMLCollectionOf<Element> = document.getElementsByClassName( "myCard" );
+        for ( var i: number = 0; i < myCards.length; i++ ) {
+            var myCard: Element = myCards[i];
+            myCard.remove();
+        }
+
+        var gameDiv: HTMLElement = <HTMLElement>document.getElementById( "gameDiv" );
+
+        var otherOpponentCount: number = 0;
+        for ( i = 0; i < Game.currentGame.players.length; i++ ) {
+            var player: Player = Game.currentGame.players[i];
+
+            if ( player.isMe() ) {
+                for ( var j: number = 0; j < player.cards.length; j++ ) {
+                    let card: Card = player.cards[j];
+                    let cardDiv: HTMLElement = document.getElementById( card.id + "" );
+                    if ( cardDiv == null ) {
+                        cardDiv = createCard( card );
+                        cardDiv.classList.add( "myCard" );
+
+                        gameDiv.appendChild( cardDiv );
+                    }
+
+                    let style: CSSStyleDeclaration = cardDiv.style;
+                    style.left = 10 + j * 80 + "px";
+                    style.bottom = "10px";
+                    style.zIndex = ( j + 1 ) + "";
+
+                    cardDiv.removeEventListener( "click", mouseClickOnMyCard );
+                    cardDiv.addEventListener( "click", mouseClickOnMyCard );
+                }
+            } else {
+                var element: HTMLElement = <HTMLElement>document.getElementById( "otherPlayerName" + otherOpponentCount );
+                element.innerText = player.name + ": ";
+
+                element = <HTMLElement>document.getElementById( "otherPlayerCards" + otherOpponentCount );
+                element.innerText = player.cards.length + " Karten";
+                otherOpponentCount++;
+            }
+        }
+
+        var topCardDiv: HTMLElement = <HTMLElement>document.getElementById( Game.currentGame.topCard.id + "" );
+        if ( topCardDiv == null ) {
+            topCardDiv = createCard( Game.currentGame.topCard );
+            gameDiv.appendChild( topCardDiv );
+        }
+
+        let style: CSSStyleDeclaration = topCardDiv.style;
+        style.left = "10px";
+        style.top = "10px";
+        style.zIndex = topCardZIndex + "";
+    }
+
+    var topCardZIndex: number = 1;
+
+    function mouseClickOnMyCard( _event: MouseEvent ): void {
+        let divCard: HTMLElement = <HTMLElement>_event.currentTarget;
+        let id: string = divCard.id;
+        var cardId: number = parseInt( id );
+        playCard( cardId );
     }
 }

@@ -6,5 +6,6 @@ declare namespace UnoClient {
         cards: Card[];
         isComputer: boolean;
         static currentPlayer: Player;
+        isMe(): boolean;
     }
 }

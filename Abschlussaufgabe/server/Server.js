@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Http = require("http");
-const Url = require("url");
-const CommandManager_1 = require("./CommandManager");
-const PlayerManager_1 = require("./PlayerManager");
-const LobbyManager_1 = require("./LobbyManager");
-const CardManager_1 = require("./CardManager");
+var Http = require("http");
+var Url = require("url");
+var CommandManager_1 = require("./CommandManager");
+var PlayerManager_1 = require("./PlayerManager");
+var LobbyManager_1 = require("./LobbyManager");
+var CardManager_1 = require("./CardManager");
 console.log("Server starting");
-let port = process.env.PORT;
+var port = process.env.PORT;
 if (port == undefined)
     port = 8100;
-let server = Http.createServer();
+var server = Http.createServer();
 server.addListener("listening", handleListen);
 server.addListener("request", handleRequest);
 server.listen(port);
@@ -19,7 +19,7 @@ function handleListen() {
 }
 function handleRequest(_request, _response) {
     console.log("Request received");
-    let query = Url.parse(_request.url, true).query;
+    var query = Url.parse(_request.url, true).query;
     var commandQuery = query["command"];
     var command = CommandManager_1.CommandManager.Instance.getCommand(commandQuery);
     if (command == null) {
@@ -35,12 +35,11 @@ function handleRequest(_request, _response) {
     if (playerIdString != null) {
         var playerId = parseInt(playerIdString);
         player = PlayerManager_1.PlayerManager.Instance.getPlayer(playerId);
-        if (player != null) {
-            console.log("player= " + player.name);
-        }
-        else {
-            console.log("player not found= " + playerIdString);
-        }
+        //        if ( player != null ) {
+        //            console.log( "player= " + player.name );
+        //        } else {
+        //            console.log( "player not found= " + playerIdString );
+        //        }
     }
     var lobbyIdString = query["lobbyId"];
     if (lobbyIdString != null) {
@@ -48,18 +47,13 @@ function handleRequest(_request, _response) {
         lobby = LobbyManager_1.LobbyManager.Instance.getLobby(lobbyId);
         if (lobby != null) {
             game = lobby.game;
-            console.log("lobby= " + lobby.name);
-        }
-        else {
-            console.log("lobby not found= " + lobbyIdString);
         }
     }
-    if (lobby != null && game != null) {
-        console.log("game= " + game.id);
-    }
-    else if (lobby != null && game == null) {
-        console.log("game not found. lobbyid= " + lobby.id);
-    }
+    //    if ( lobby != null && game != null ) {
+    //        console.log( "game= " + game.id );
+    //    } else if ( lobby != null && game == null ) {
+    //        console.log( "game not found. lobbyid= " + lobby.id );
+    //    }
     var cardIdString = query["cardId"];
     if (cardIdString != null) {
         var cardId = parseInt(cardIdString);

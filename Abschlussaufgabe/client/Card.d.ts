@@ -1,6 +1,8 @@
 declare namespace UnoClient {
     class Card {
         id: number;
-        s: string;
+        color: string;
+        type: string;
+        isJoker: boolean;
     }
 }
