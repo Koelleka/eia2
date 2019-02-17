@@ -29,56 +29,63 @@ function handleListen(): void {
 function handleRequest( _request: Http.IncomingMessage, _response: Http.ServerResponse ): void {
     console.log( "Request received" );
 
-    let query: AssocStringString = Url.parse( _request.url, true ).query;
-    var commandQuery: string = query["command"];
+    try {
+        let query: AssocStringString = Url.parse( _request.url, true ).query;
+        var commandQuery: string = query["command"];
 
-    var command: Command = CommandManager.Instance.getCommand( commandQuery );
-    if ( command == null ) {
-        respond( _response, "command not found!" );
-    }
-    console.log( "command= " + commandQuery );
-
-    var player: Player;
-    var lobby: Lobby;
-    var card: GameCard;
-    var game: Game;
-    var name: string = query["name"];
-
-    var playerIdString: string = query["playerId"];
-    if ( playerIdString != null ) {
-        var playerId: number = parseInt( playerIdString );
-        player = PlayerManager.Instance.getPlayer( playerId );
-        //        if ( player != null ) {
-        //            console.log( "player= " + player.name );
-        //        } else {
-        //            console.log( "player not found= " + playerIdString );
-        //        }
-    }
-
-    var lobbyIdString: string = query["lobbyId"];
-    if ( lobbyIdString != null ) {
-        var lobbyId: number = parseInt( lobbyIdString );
-        lobby = LobbyManager.Instance.getLobby( lobbyId );
-        if ( lobby != null ) {
-            game = lobby.game;
+        var command: Command = CommandManager.Instance.getCommand( commandQuery );
+        if ( command == null ) {
+            respond( _response, "command not found!" );
         }
+        console.log( "command= " + commandQuery );
+
+        var player: Player;
+        var lobby: Lobby;
+        var card: GameCard;
+        var game: Game;
+        var name: string = query["name"];
+
+        var playerIdString: string = query["playerId"];
+        if ( playerIdString != null ) {
+            var playerId: number = parseInt( playerIdString );
+            player = PlayerManager.Instance.getPlayer( playerId );
+            //        if ( player != null ) {
+            //            console.log( "player= " + player.name );
+            //        } else {
+            //            console.log( "player not found= " + playerIdString );
+            //        }
+        }
+
+        var lobbyIdString: string = query["lobbyId"];
+        if ( lobbyIdString != null ) {
+            var lobbyId: number = parseInt( lobbyIdString );
+            lobby = LobbyManager.Instance.getLobby( lobbyId );
+            if ( lobby != null ) {
+                game = lobby.game;
+            }
+        }
+
+        //    if ( lobby != null && game != null ) {
+        //        console.log( "game= " + game.id );
+        //    } else if ( lobby != null && game == null ) {
+        //        console.log( "game not found. lobbyid= " + lobby.id );
+        //    }
+
+        var cardIdString: string = query["cardId"];
+        if ( cardIdString != null ) {
+            var cardId: number = parseInt( cardIdString );
+            card = CardManager.Instance.getCard( cardId );
+        }
+
+        var result: ServerEvent = command.execute( game, lobby, player, card, name );
+        var json: string = JSON.stringify( result );
+        respond( _response, json );
+    } catch ( ex ) {
+        console.log( "an error occured!!" );
+        console.log( ex );
+        respond( _response, "an error occured!!" );
     }
 
-    //    if ( lobby != null && game != null ) {
-    //        console.log( "game= " + game.id );
-    //    } else if ( lobby != null && game == null ) {
-    //        console.log( "game not found. lobbyid= " + lobby.id );
-    //    }
-
-    var cardIdString: string = query["cardId"];
-    if ( cardIdString != null ) {
-        var cardId: number = parseInt( cardIdString );
-        card = CardManager.Instance.getCard( cardId );
-    }
-
-    var result: ServerEvent = command.execute( game, lobby, player, card, name );
-    var json: string = JSON.stringify( result );
-    respond( _response, json );
 
     // findCallback is an inner function so that _response is in scope
     function findCallback( json: string ): void {
