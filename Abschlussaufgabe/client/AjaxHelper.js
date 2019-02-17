@@ -22,7 +22,7 @@ var UnoClient;
         // Code von SendData umgeschrieben
         AjaxHelper.sendRequestWithCustomData = function (_command) {
             var xhr = new XMLHttpRequest();
-            var requestString = "http://localhost:8100?command=" + _command.command;
+            var requestString = "https://eia2db.herokuapp.com?command=" + _command.command;
             requestString += "&cardId=" + _command.cardId;
             requestString += "&gameId=" + _command.gameId;
             requestString += "&lobbyId=" + _command.lobbyId;

@@ -150,7 +150,7 @@ var Baum3;
             }
             queryString += "&";
         }
-        let xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.open("GET", _form.action + queryString, true);
         xhr.addEventListener("readystatechange", handleStateChange);
         xhr.send();

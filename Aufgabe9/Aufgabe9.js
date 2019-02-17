@@ -1,14 +1,14 @@
 var Aufgabe9;
 (function (Aufgabe9) {
     window.addEventListener("load", init);
-    let crc2;
+    var crc2;
     function init(_event) {
         console.log("Canvas started");
-        let canvas = document.getElementsByTagName("canvas")[0];
+        var canvas = document.getElementsByTagName("canvas")[0];
         crc2 = canvas.getContext("2d");
-        let objects = [];
-        let width = 320;
-        let height = 640;
+        var objects = [];
+        var width = 320;
+        var height = 640;
         objects.push(new Aufgabe9.Sky(0, 0, 320, 640));
         objects.push(new Aufgabe9.Sun(50, 30, 80, 80));
         objects.push(new Aufgabe9.Cloud(80, 60, 140, 80));

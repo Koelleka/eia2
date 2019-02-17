@@ -154,7 +154,7 @@ var Baum4;
         while (queryString.charAt(queryString.length - 1) == "&") {
             queryString = queryString.slice(0, -1);
         }
-        let xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.open("GET", _form.action + queryString, true);
         xhr.addEventListener("readystatechange", handleStateChange);
         xhr.send();
@@ -181,7 +181,7 @@ var Baum4;
             // Das ist wie eine for Schleife, nur das wir eine anonyme funktion als parameter übergeben
             // Die Funktion wird für jedes Paar in der Map aufsgeführt
             // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Map
-            responseObj.forEach((value, key) => {
+            responseObj.forEach(function (value, key) {
                 console.log(key, value);
                 var divElement = document.createElement("div");
                 divElement.innerText = key + ": " + value;

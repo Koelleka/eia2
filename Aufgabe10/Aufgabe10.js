@@ -1,16 +1,16 @@
 var Aufgabe10;
 (function (Aufgabe10) {
     window.addEventListener("load", init);
-    let crc2;
-    let backgroundImageData;
-    let width = 320;
-    let height = 640;
-    let objects = [];
-    let fps = 25;
-    let animationSpeed = 0.9;
+    var crc2;
+    var backgroundImageData;
+    var width = 320;
+    var height = 640;
+    var objects = [];
+    var fps = 25;
+    var animationSpeed = 0.9;
     function init(_event) {
         console.log("Canvas started");
-        let canvas = document.getElementsByTagName("canvas")[0];
+        var canvas = document.getElementsByTagName("canvas")[0];
         crc2 = canvas.getContext("2d");
         createBackgroundData(crc2);
         var cloud1 = new Aufgabe10.Cloud(80, 60, 140, 80);

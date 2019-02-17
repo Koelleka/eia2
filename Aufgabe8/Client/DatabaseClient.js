@@ -2,20 +2,20 @@ var DatabaseClient;
 (function (DatabaseClient) {
     window.addEventListener("load", init);
     //let serverAddress: string = "http://localhost:8100";
-    let serverAddress = "https://eia2db.herokuapp.com/";
+    var serverAddress = "https://eia2db.herokuapp.com/";
     function init(_event) {
         console.log("Init");
-        let insertButton = document.getElementById("insert");
-        let refreshButton = document.getElementById("refresh");
-        let findButton = document.getElementById("find");
+        var insertButton = document.getElementById("insert");
+        var refreshButton = document.getElementById("refresh");
+        var findButton = document.getElementById("find");
         insertButton.addEventListener("click", insert);
         refreshButton.addEventListener("click", refresh);
         findButton.addEventListener("click", find);
     }
     function insert(_event) {
         console.log("insert");
-        let inputs = document.getElementsByTagName("input");
-        let query = "command=insert";
+        var inputs = document.getElementsByTagName("input");
+        var query = "command=insert";
         query += "&name=" + inputs[0].value;
         query += "&firstname=" + inputs[1].value;
         query += "&matrikel=" + inputs[2].value;
@@ -24,33 +24,33 @@ var DatabaseClient;
     }
     function refresh(_event) {
         console.log("refresh");
-        let query = "command=refresh";
+        var query = "command=refresh";
         sendRequest(query, handleFindResponse);
     }
     function find(_event) {
         console.log("find");
         var matrikel = document.getElementById("matrikelSearch").value;
-        let query = "command=find&matrikel=" + matrikel;
+        var query = "command=find&matrikel=" + matrikel;
         sendRequest(query, handleFindResponse);
     }
     function sendRequest(_query, _callback) {
-        let xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.open("GET", serverAddress + "?" + _query, true);
         xhr.addEventListener("readystatechange", _callback);
         xhr.send();
     }
     function handleInsertResponse(_event) {
-        let xhr = _event.target;
+        var xhr = _event.target;
         if (xhr.readyState == XMLHttpRequest.DONE) {
             alert(xhr.response);
         }
     }
     function handleFindResponse(_event) {
-        let xhr = _event.target;
+        var xhr = _event.target;
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            let output = document.getElementsByTagName("textarea")[0];
+            var output = document.getElementsByTagName("textarea")[0];
             output.value = xhr.response;
-            let responseAsJson = JSON.parse(xhr.response);
+            var responseAsJson = JSON.parse(xhr.response);
             console.log(responseAsJson);
         }
     }

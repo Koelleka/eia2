@@ -28,7 +28,7 @@ namespace UnoClient {
         private static sendRequestWithCustomData( _command: Command ): void {
             let xhr: XMLHttpRequest = new XMLHttpRequest();
 
-            var requestString: string = "http://localhost:8100?command=" + _command.command;
+            var requestString: string = "https://eia2db.herokuapp.com?command=" + _command.command;
             requestString += "&cardId=" + _command.cardId;
             requestString += "&gameId=" + _command.gameId;
             requestString += "&lobbyId=" + _command.lobbyId;

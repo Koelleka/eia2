@@ -1,26 +1,26 @@
 var L06_SendData;
 (function (L06_SendData) {
     window.addEventListener("load", init);
-    let address = "http://localhost:8100";
+    var address = "http://localhost:8100";
     //let address: string = "https://eia2-nodetest.herokuapp.com";
     function init(_event) {
         setupColorDivs();
     }
     function setupColorDivs() {
-        let colors = ["red", "green", "blue"];
-        let divs = document.getElementsByTagName("div");
-        for (let i = 0; i < divs.length; i++) {
+        var colors = ["red", "green", "blue"];
+        var divs = document.getElementsByTagName("div");
+        for (var i = 0; i < divs.length; i++) {
             divs[i].style.backgroundColor = colors[i];
             divs[i].addEventListener("click", handleClickOnDiv);
         }
     }
     function handleClickOnDiv(_event) {
-        let style = _event.target.style;
+        var style = _event.target.style;
         console.log(style.backgroundColor);
         sendRequestWithCustomData(style.backgroundColor);
     }
     function sendRequestWithCustomData(_color) {
-        let xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.open("GET", address + "?color=" + _color, true);
         xhr.addEventListener("readystatechange", handleStateChange);
         xhr.send();

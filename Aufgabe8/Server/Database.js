@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Simple database insertion and query for MongoDB
  * @author: Jirka Dell'Oro-Friedl
  */
-const Mongo = require("mongodb");
+var Mongo = require("mongodb");
 console.log("Database starting");
-let databaseURL = "mongodb://localhost:27017";
-let databaseName = "Test";
-let db;
-let students;
+var databaseURL = "mongodb://localhost:27017";
+var databaseName = "Test";
+var db;
+var students;
 // running on heroku?
 if (process.env.NODE_ENV == "production") {
     databaseURL = "mongodb://eia2:Katharina10@ds161518.mlab.com:61518/alpaka";
@@ -55,7 +55,7 @@ function findAll(_callback) {
 }
 exports.findAll = findAll;
 function find(_matrikel, _callback) {
-    students.findOne({ "matrikel": _matrikel }, (_err, _result) => {
+    students.findOne({ "matrikel": _matrikel }, function (_err, _result) {
         if (_err) {
             _callback("Error" + _err);
         }

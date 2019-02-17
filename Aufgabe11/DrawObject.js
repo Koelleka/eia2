@@ -2,26 +2,27 @@ var Aufgabe11;
 (function (Aufgabe11) {
     ;
     ;
-    class Rectangle {
-        constructor(_position, _size) {
+    var Rectangle = (function () {
+        function Rectangle(_position, _size) {
             this.position = _position;
             this.size = _size;
         }
-        randomPoint() {
-            let rx = Math.random() * this.size.width + this.position.x;
-            let ry = Math.random() * this.size.height + this.position.y;
+        Rectangle.prototype.randomPoint = function () {
+            var rx = Math.random() * this.size.width + this.position.x;
+            var ry = Math.random() * this.size.height + this.position.y;
             console.log("random point in rect: " + "x=" + this.position.x + " y=" + this.position.y + " w=" + this.size.width + " h=" + this.size.height);
             console.log("random point:         " + "x=" + rx + " y=" + ry);
             return { x: rx, y: ry };
-        }
-        isInRect(_point) {
+        };
+        Rectangle.prototype.isInRect = function (_point) {
             return _point.x >= this.position.x && _point.x <= this.position.x + this.size.width
                 && _point.y >= this.position.y && _point.y <= this.position.y + this.size.height;
-        }
-    }
+        };
+        return Rectangle;
+    }());
     Aufgabe11.Rectangle = Rectangle;
-    class DrawObject {
-        constructor(_x, _y, _width, _height) {
+    var DrawObject = (function () {
+        function DrawObject(_x, _y, _width, _height) {
             this.position = {
                 x: _x,
                 y: _y
@@ -37,7 +38,7 @@ var Aufgabe11;
             this.infinite = false;
         }
         ;
-        move(_speed) {
+        DrawObject.prototype.move = function (_speed) {
             this.position.x += this.velocity.x * _speed;
             this.position.y += this.velocity.y * _speed;
             if (this.infinite) {
@@ -46,40 +47,43 @@ var Aufgabe11;
                 if (this.position.y > 640)
                     this.position.y = -this.size.height;
             }
-        }
-        faceTo(_target) {
-            let vec = Vector.fromPoints(this.position, _target);
+        };
+        DrawObject.prototype.faceTo = function (_target) {
+            var vec = Vector.fromPoints(this.position, _target);
             console.log("target:    " + "x=" + _target.x + " y=" + _target.y);
             console.log("direction: " + vec);
             this.velocity = vec.normalize(); // Vector und Point haben die gleichen Attribute
-        }
-    }
+        };
+        return DrawObject;
+    }());
     Aufgabe11.DrawObject = DrawObject;
-    class Vector {
-        constructor(_x, _y) {
-            this.toString = () => {
-                return "x=" + this.x + " y=" + this.y;
+    var Vector = (function () {
+        function Vector(_x, _y) {
+            var _this = this;
+            this.toString = function () {
+                return "x=" + _this.x + " y=" + _this.y;
             };
             this.x = _x;
             this.y = _y;
         }
-        static fromPoints(_from, _to) {
+        Vector.fromPoints = function (_from, _to) {
             console.log("point from: " + "x=" + _from.x + " y=" + _from.y);
             console.log("point to:   " + "x=" + _to.x + " y=" + _to.y);
-            let result = new Vector(_to.x - _from.x, _to.y - _from.y);
+            var result = new Vector(_to.x - _from.x, _to.y - _from.y);
             console.log("vector:     " + result);
             return result;
-        }
-        scalarMultiply(_factor) {
+        };
+        Vector.prototype.scalarMultiply = function (_factor) {
             return new Vector(this.x * _factor, this.y * _factor);
-        }
-        length() {
+        };
+        Vector.prototype.length = function () {
             return Math.sqrt(this.x * this.x + this.y * this.y);
-        }
-        normalize() {
+        };
+        Vector.prototype.normalize = function () {
             return this.scalarMultiply(1 / this.length());
-        }
-    }
+        };
+        return Vector;
+    }());
     Aufgabe11.Vector = Vector;
 })(Aufgabe11 || (Aufgabe11 = {}));
 //# sourceMappingURL=DrawObject.js.map

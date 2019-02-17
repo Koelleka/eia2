@@ -1,17 +1,17 @@
 var Aufgabe11;
 (function (Aufgabe11) {
     window.addEventListener("load", init);
-    let crc2;
-    let backgroundImageData;
-    let width = 320;
-    let height = 640;
-    let objects = [];
-    let fps = 25;
-    let animationSpeed = 1.6;
+    var crc2;
+    var backgroundImageData;
+    var width = 320;
+    var height = 640;
+    var objects = [];
+    var fps = 25;
+    var animationSpeed = 1.6;
     // in diesen Bereich sollen die Kinder runter fahren
-    let downHillTarget = new Aufgabe11.Rectangle({ x: 0, y: height }, { width: width / 2, height: 10 });
+    var downHillTarget = new Aufgabe11.Rectangle({ x: 0, y: height }, { width: width / 2, height: 10 });
     // In diesen Bereich sollen die Kinder die Schlitten wieder hochziehen
-    let upHillTarget = new Aufgabe11.Rectangle({ x: width, y: height * 0.25 }, { width: 10, height: height / 3 });
+    var upHillTarget = new Aufgabe11.Rectangle({ x: width, y: height * 0.25 }, { width: 10, height: height / 3 });
     /*
      * ********
      * ********
@@ -26,7 +26,7 @@ var Aufgabe11;
      * */
     function init(_event) {
         console.log("Canvas started");
-        let canvas = document.getElementsByTagName("canvas")[0];
+        var canvas = document.getElementsByTagName("canvas")[0];
         crc2 = canvas.getContext("2d");
         createBackgroundData(crc2);
         var cloud1 = new Aufgabe11.Cloud(80, 60, 140, 80);
@@ -65,7 +65,7 @@ var Aufgabe11;
         window.setTimeout(update, 1000 / fps);
         crc2.putImageData(backgroundImageData, 0, 0);
         for (var i = 0; i < objects.length; i++) {
-            let obj = objects[i];
+            var obj = objects[i];
             obj.move(animationSpeed);
             // Hier prüfen wir ob die das Zielareal erreicht haben
             var target;

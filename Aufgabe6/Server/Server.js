@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Http = require("http");
+var Http = require("http");
 //import Http = require( 'http' );
 /*Importiert alle Funktionen vom modul "httpdas
  * http Modul ist in der node.d.ts definiert */
@@ -9,13 +9,13 @@ var Server;
     console.log("Starting server"); // Konsolenausgabe
     /* process kommt von NodeJS (env steht für environment, also Umgebung)
      * Einfacher ausgefrückt sind Umgebungsvariablen von Node in process.env gespeichert */
-    let port = process.env.PORT;
+    var port = process.env.PORT;
     /* Wenn kein Port definiert worden ist, oder keine Node Umgebung vorhanden ist,
      * dann soll der port 8100 verwendet werden.
      * (Wenn port == undefiniert, dann setze port auf 8100) */
     if (port == undefined)
         port = 8100;
-    let server = Http.createServer(); // Erzeugt einen HTTP Server
+    var server = Http.createServer(); // Erzeugt einen HTTP Server
     server.addListener("request", handleRequest); // Event Listener für das Event "request" hinzufügen
     server.addListener("listening", handleListen); // Event Listener für das Event "listening" hinzufügen
     server.listen(port); // Der Http Server soll auf dem port "port" lauschen
@@ -63,7 +63,7 @@ var Server;
             // https://basarat.gitbooks.io/typescript/docs/spread-operator.html
             // Die 3 Punkte sind der prefixing Operator, die Map wird quasi auseinander 
             // gebaut und die einzelnen Key Value Paare als Parameter übergeben
-            var responseJson = JSON.stringify([...requestObj]);
+            var responseJson = JSON.stringify(requestObj.slice());
             _response.write(responseJson);
         }
         else {
